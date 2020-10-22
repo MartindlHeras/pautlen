@@ -10,7 +10,19 @@ santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | marti
 
 - [ ] Entrega 1
 
+### Cosas para hacer
+
+- [ ] Las funciones que hay en generacion.h (dividir)
+- [ ] Organizar el código por carpetas
+- [ ] Makefile
+- [ ] Poner cabeceras
+- [ ] Comprobar con los ejemplos del enunciado
+
 ### Comandos útiles
 
 - nasm -g –o [<fichero objeto (.o)>] –f elf <fichero fuente (.asm)>
 - gcc -o <fichero ejecutable> <fichero objeto 1> <fichero objeto 2>
+
+### Enlaces útiles
+
+- [Santorumada](https://github.com/AlejandroSantorum/PAUTLEN_Assignments)
