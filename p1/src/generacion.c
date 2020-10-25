@@ -18,8 +18,8 @@ void declarar_variable(FILE* fpasm, char * nombre, int tipo, int tamano){
 void escribir_segmento_codigo(FILE* fpasm){
   fprintf(fpasm, "segment .text\n");
   fprintf(fpasm, "global main\n");
-  fprintf(fpasm, "extern print_int, scan_int, print_string, print_blank, ");
-  fprintf(fpasm, "print_endofline, print_boolean, scan_boolean\n");
+  fprintf(fpasm, "extern print_int, scan_int, print_boolean, scan_boolean,");
+  fprintf(fpasm, " print_string, print_blank, print_endofline\n");
 }
 
 void escribir_inicio_main(FILE* fpasm){
@@ -116,7 +116,7 @@ void no(FILE* fpasm, int es_variable, int cuantos_no){
   fprintf(fpasm, "end_%d:\n", cuantos_no);
 }
 
-void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+void igual(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta){
   pop_operaciones(fpasm, es_variable_1, es_variable_2);
   fprintf(fpasm, "cmp eax, ebx\n");
   fprintf(fpasm, "je equal_%d\n", etiqueta);
@@ -127,7 +127,7 @@ void igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "equal_end_%d\n", etiqueta);
 }
 
-void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+void distinto(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta){
   pop_operaciones(fpasm, es_variable_1, es_variable_2);
   fprintf(fpasm, "cmp eax, ebx\n");
   fprintf(fpasm, "jne nequal_%d\n", etiqueta);
@@ -138,7 +138,7 @@ void distinto(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "nequal_end_%d\n", etiqueta);
 }
 
-void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+void menor_igual(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta){
   pop_operaciones(fpasm, es_variable_1, es_variable_2);
   fprintf(fpasm, "cmp eax, ebx\n");
   fprintf(fpasm, "jle lessequal_%d\n", etiqueta);
@@ -149,7 +149,7 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "lessequal_end_%d\n", etiqueta);
 }
 
-void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+void mayor_igual(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta){
   pop_operaciones(fpasm, es_variable_1, es_variable_2);
   fprintf(fpasm, "cmp eax, ebx\n");
   fprintf(fpasm, "jge greatequal_%d\n", etiqueta);
@@ -160,7 +160,7 @@ void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "greatequal_end_%d\n", etiqueta);
 }
 
-void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+void menor(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta){
   pop_operaciones(fpasm, es_variable_1, es_variable_2);
   fprintf(fpasm, "cmp eax, ebx\n");
   fprintf(fpasm, "jl less_%d\n", etiqueta);
@@ -171,7 +171,7 @@ void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
   fprintf(fpasm, "less_end_%d\n", etiqueta);
 }
 
-void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
+void mayor(FILE* fpasm, int es_variable_1, int es_variable_2, int etiqueta){
   pop_operaciones(fpasm, es_variable_1, es_variable_2);
   fprintf(fpasm, "cmp eax, ebx\n");
   fprintf(fpasm, "jg great_%d\n", etiqueta);
@@ -183,13 +183,27 @@ void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta){
 }
 
 void leer(FILE* fpasm, char* nombre, int tipo){
-
+  fprintf(fpasm, "push dword _%s\n", nombre);
+  if(tipo == BOOLEANO){
+    fprintf(fpasm, "call scan_boolean\n");
+  }else if(tipo == ENTERO){
+    fprintf(fpasm, "call scan_int\n");
+  }
+  fprintf(fpasm, "add esp, 4\n");
 }
 
 void escribir(FILE* fpasm, int es_variable, int tipo){
-
+  fprintf(fpasm, "pop dword eax\n");
+  if (es_variable) fprintf(fpasm, "mov eax, [eax]\n");
+  fprintf(fpasm, "push dword eax\n");
+  if(tipo == BOOLEANO){
+    fprintf(fpasm, "call print_boolean\n");
+  }else if(tipo == ENTERO){
+    fprintf(fpasm, "call print_int\n");
+  }
+  fprintf(fpasm, "add esp, 4\n");
+  fprintf(fpasm, "call print_endofline\n");
 }
-
 
 /* FUNCIONES DE CONTROL DEL FLUJO */
 void ifthenelse_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){

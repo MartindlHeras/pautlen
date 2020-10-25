@@ -1,34 +1,19 @@
 ########################################################
-CC=gcc
-CFLAGS= -g -Wall -O3 -std=c90  -I./include/ #-ansi -pedantic
-LDFLAGS= -lncurses
-EJS = player_test
-########################################################
-OBJECTSPLAYER = player_test.o player.o inventory.o set.o
+# Makefile General que invoca a los otros 2 Makefiles
 ########################################################
 
-# MAKEFILE DE PPROG, HAY QUE CAMBIARLO
-# - nasm -g –o [<fichero objeto (.o)>] –f elf <fichero fuente (.asm)>
-# - gcc -o <fichero ejecutable> <fichero objeto 1> <fichero objeto 2>
+make_src:
+	cd src && $(MAKE)
 
-all: $(EJS)
+make_tests: makesrc
+	cd test && $(MAKE)
 
-player_test: $(OBJECTSPLAYER)
-	$(CC) $(CFLAGS) -o player_test obj/player_test.o obj/player.o obj/inventory.o obj/set.o $(LDFLAGS)
+.PHONY: cleansrc cleantests clean
+cleansrc:
+	cd src && $(MAKE) clean
 
+cleantests:
+	cd test && $(MAKE) clean
 
-player.o: src/player.c include/player.h
-	$(CC) $(CFLAGS) -c -o obj/player.o src/player.c $(LDFLAGS)
-
-player_test.o: src/player_test.c include/player.h include/inventory.h
-	$(CC) $(CFLAGS) -c -o obj/player_test.o src/player_test.c $(LDFLAGS)
-
-
-clear:
-	rm -rf obj/*.o
-
-clean:
-	rm -rf obj/*.o $(EJS)
-
-doxygen:
-	doxygen Doxyfile
+clean: cleansrc cleantests
+	rm -rf *.o
