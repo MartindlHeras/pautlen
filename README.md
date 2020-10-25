@@ -12,8 +12,8 @@ santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | marti
 
 ### Cosas para hacer
 
-- [ ] Las funciones que hay en generacion.h (dividir)
-- [ ] Organizar el código por carpetas
+- [x] Las funciones que hay en generacion.h (dividir)
+- [x] Organizar el código por carpetas
 - [ ] Makefile
 - [ ] Poner cabeceras
 - [ ] Comprobar con los ejemplos del enunciado

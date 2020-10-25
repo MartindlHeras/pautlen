@@ -4,11 +4,13 @@
 /* Declaraciones de tipos de datos del compilador */
 #define ENTERO 0
 #define BOOLEANO 1
+
 /* OBSERVACIÓN GENERAL A TODAS LAS FUNCIONES:
 Todas ellas escriben el código NASM a un FILE* proporcionado como primer
 argumento.
 */
 void escribir_cabecera_bss(FILE* fpasm);
+
 /*
 Código para el principio de la sección .bss.
 Con seguridad sabes que deberás reservar una variable entera para guardar el
@@ -22,6 +24,7 @@ mensajes para la identificación de errores en tiempo de ejecución.
 En este punto, al menos, debes ser capaz de detectar la división por 0.
 */
 void declarar_variable(FILE* fpasm, char * nombre, int tipo, int tamano);
+
 /*
 Para ser invocada en la sección .bss cada vez que se quiera declarar una
 variable:
@@ -33,17 +36,20 @@ vectores, por eso se adjunta un argumento final (tamano) que para esta
 primera práctica siempre recibirá el valor 1.
 */
 void escribir_segmento_codigo(FILE* fpasm);
+
 /*
 Para escribir el comienzo del segmento .text, básicamente se indica que se
 exporta la etiqueta main y que se usarán las funciones declaradas en la librería
 alfalib.o
 */
 void escribir_inicio_main(FILE* fpasm);
+
 /*
 En este punto se debe escribir, al menos, la etiqueta main y la sentencia que
 guarda el puntero de pila en su variable (se recomienda usar __esp).
 */
 void escribir_fin(FILE* fpasm);
+
 /*
 Al final del programa se escribe:
 - El código NASM para salir de manera controladacuando se detecta un error
@@ -55,6 +61,7 @@ zona de finalización del programa).
 ·Salir del programa (ret).
 */
 void escribir_operando(FILE* fpasm, char* nombre, int es_variable);
+
 /*
 Función que debe ser invocada cuando se sabe un operando de una operación
 aritmético-lógica y se necesita introducirlo en la pila.
@@ -66,6 +73,7 @@ primer caso internamente se representará como _b1 y, sin embargo, en el
 segundo se representará tal y como esté en el argumento (34).
 */
 void asignar(FILE* fpasm, char* nombre, int es_variable);
+
 /*
 - Genera el código para asignar valor a la variable de nombre nombre.
 - Se toma el valor de la cima de la pila.
@@ -93,12 +101,14 @@ void dividir(FILE* fpasm, int es_variable_1, int es_variable_2);
 void o(FILE* fpasm, int es_variable_1, int es_variable_2);
 void y(FILE* fpasm, int es_variable_1, int es_variable_2);
 void cambiar_signo(FILE* fpasm, int es_variable);
+
 /*
 Función aritmética de cambio de signo.
 Es análoga a las binarias, excepto que sólo requiere de un acceso a la pila ya
 que sólo usa un operando.
 */
 void no(FILE* fpasm, int es_variable, int cuantos_no);
+
 /*
 Función monádica lógica de negación. No hay un código de operación de la ALU
 que realice esta operación por lo que se debe codificar un algoritmo que, si
@@ -121,6 +131,7 @@ void menor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta);
 void mayor_igual(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta);
 void menor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta);
 void mayor(FILE* fpasm, int es_variable1, int es_variable2, int etiqueta);
+
 /* FUNCIONES DE ESCRITURA Y LECTURA */
 
 /*
@@ -132,4 +143,30 @@ Se deben insertar en la pila los argumentos necesarios, realizar la llamada
 */
 void leer(FILE* fpasm, char* nombre, int tipo);
 void escribir(FILE* fpasm, int es_variable, int tipo);
+
+/* FUNCIONES DE CONTROL DEL FLUJO */
+void ifthenelse_inicio(FILE * fpasm, int exp_es_variable, int etiqueta);
+void ifthen_inicio(FILE * fpasm, int exp_es_variable, int etiqueta);
+void ifthen_fin(FILE * fpasm, int etiqueta);
+void ifthenelse_fin_then(FILE * fpasm, int etiqueta);
+void ifthenelse_fin(FILE * fpasm, int etiqueta);
+
+/* FUNCIONES BUCLES WHILE */
+void while_inicio(FILE * fpasm, int etiqueta);
+void while_exp_pila (FILE * fpasm, int exp_es_variable, int etiqueta);
+void while_fin( FILE * fpasm, int etiqueta);
+
+/* HASTA AQUI PARA EL LUNES */
+
+/* FUNCIONES INDEXAR VECTORES */
+void escribir_elemento_vector(FILE * fpasm,char * nombre_vector, int tam_max, int exp_es_direccion);
+
+void declararFuncion(FILE * fd_asm, char * nombre_funcion, int num_var_loc);
+void retornarFuncion(FILE * fd_asm, int es_variable);
+void escribirParametro(FILE* fpasm, int pos_parametro, int num_total_parametros);
+void escribirVariableLocal(FILE* fpasm, int posicion_variable_local);
+void asignarDestinoEnPila(FILE* fpasm, int es_variable);
+void operandoEnPilaAArgumento(FILE * fd_asm, int es_variable);
+void llamarFuncion(FILE * fd_asm, char * nombre_funcion, int num_argumentos);
+void limpiarPila(FILE * fd_asm, int num_argumentos);
 #endif
