@@ -2,7 +2,7 @@
 CC=gcc
 CFLAGS= -g -Wall
 SRC=../src
-EJS= ej1 ej2 ej3 ej4 ej5 #ej6 ej7
+EJS= ej1 ej2 ej3 ej4 ej5 ej6 ej7
 ########################################################
 OBJECTSGENERACIONES = generacion.o
 ########################################################
@@ -41,6 +41,18 @@ ej5: ejemplo5.c $(SRC)/generacion.o
 	./$@ ej5.asm
 	nasm -g -o ej5.o -f elf32 ej5.asm
 	gcc -m32 -o ej5 ej5.o ../alfalib.o
+
+ej6: ejemplo6.c $(SRC)/generacion.o
+	$(CC) $(CFLAGS) -o ej6 ejemplo6.c $(SRC)/generacion.o
+	./$@ ej6.asm
+	nasm -g -o ej6.o -f elf32 ej6.asm
+	gcc -m32 -o ej6 ej6.o ../alfalib.o
+
+ej7: ejemplo7.c $(SRC)/generacion.o
+	$(CC) $(CFLAGS) -o ej7 ejemplo7.c $(SRC)/generacion.o
+	./$@ ej7.asm
+	nasm -g -o ej7.o -f elf32 ej7.asm
+	gcc -m32 -o ej7 ej7.o ../alfalib.o
 
 .PHONY: clear clean
 clear:

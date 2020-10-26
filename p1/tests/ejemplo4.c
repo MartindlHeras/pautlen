@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../src/generacion.h"
+
 int main (int argc, char** argv)
 {
     FILE * salida;
