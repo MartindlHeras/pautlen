@@ -1,4 +1,4 @@
-#include "generacion.h"
+#include "../src/generacion.h"
 
 #define MAX_ETIQUETAS 5
 
@@ -29,12 +29,12 @@ int main (int argc, char ** argv)
     escribirVariableLocal(fd_asm, 1);
     asignarDestinoEnPila(fd_asm, 1);
 
-    //2*arg. 
-    escribir_operando(fd_asm, "2", 0); 
-    escribirParametro(fd_asm, 0, 1); 
+    //2*arg.
+    escribir_operando(fd_asm, "2", 0);
+    escribirParametro(fd_asm, 0, 1);
     multiplicar(fd_asm, 0, 1);
 
-    //Retornamos de la funcion con lo que esta encima de la pila. 
+    //Retornamos de la funcion con lo que esta encima de la pila.
     retornarFuncion(fd_asm, 0);
     escribir_inicio_main(fd_asm);
 
@@ -42,7 +42,7 @@ int main (int argc, char ** argv)
     escribir_operando(fd_asm, "2", 0);
     asignar(fd_asm, "z", 0);
     escribir_operando(fd_asm, "z", 1);
-    
+
     // printf doble(z)
     //Llamamos a la funcion que tiene 1 argumento. Estamos dando un salto a la etiqueta. Primero apilamos el parametro.
     operandoEnPilaAArgumento(fd_asm, 1);
@@ -51,7 +51,7 @@ int main (int argc, char ** argv)
     //Imprimimos el resultado de la funcion.
     escribir(fd_asm, 0, ENTERO);
     escribir_fin(fd_asm);
-    
+
     fclose(fd_asm);
 
 }

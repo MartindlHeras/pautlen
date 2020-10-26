@@ -52,7 +52,8 @@ int main (int argc, char ** argv)
     etiqueta = etiquetas[cima_etiquetas];
     while_exp_pila(fd_asm, 0, etiqueta);
 
-    //printf m escribir_operando(fd_asm,"m",1);
+    //printf m
+    escribir_operando(fd_asm,"m",1);
     escribir(fd_asm,1,ENTERO);
 
     //v[m] = m*10;
