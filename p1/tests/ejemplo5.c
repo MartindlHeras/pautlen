@@ -1,7 +1,10 @@
 #include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "generacion.h"
+#include "../src/generacion.h"
+
+#define MAX_ETIQUETAS 5
+
 int main (int argc, char ** argv)
 {
     if (argc != 2){
@@ -15,8 +18,8 @@ int main (int argc, char ** argv)
     int cima_etiquetas=-1;
     FILE * fd_asm;
 
-    fd_asm = fopen(argv[1],"w")
-    escribir_subseccion_data(fd_asm)
+    fd_asm = fopen(argv[1],"w");
+    escribir_subseccion_data(fd_asm);
     escribir_cabecera_bss(fd_asm);
 
     //int m;
@@ -36,7 +39,7 @@ int main (int argc, char ** argv)
     cima_etiquetas++;
     etiquetas[cima_etiquetas]=getiqueta;
 
-    //Inicio del while. Impresion de la etiqueta. 
+    //Inicio del while. Impresion de la etiqueta.
     etiqueta = etiquetas[cima_etiquetas];
     while_inicio(fd_asm, etiqueta);
 
@@ -66,13 +69,13 @@ int main (int argc, char ** argv)
     sumar(fd_asm,1,0);
     asignar(fd_asm,"m",0);
 
-    //Recuperamos la etiqueta para imprimir el fin de etiqueta del while. 
+    //Recuperamos la etiqueta para imprimir el fin de etiqueta del while.
     etiqueta = etiquetas[cima_etiquetas];
     while_fin(fd_asm, etiqueta);
 
     //Al cerrar el ámbito, decrementamos el contador de cima de etiquetas.
     cima_etiquetas--;
     escribir_fin(fd_asm);
-    
+
     fclose(fd_asm);
 }

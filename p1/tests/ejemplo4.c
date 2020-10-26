@@ -1,12 +1,13 @@
-#include <stdio.h> #include "generacion.h"
+#include <stdio.h>
+#include "../src/generacion.h"
 int main (int argc, char** argv)
 {
     FILE * salida;
     int etiqueta = 0;
     if (argc != 2) {
-        fprintf (stdout, "ERROR POCOS ARGUMENTOS\n"); 
+        fprintf (stdout, "ERROR POCOS ARGUMENTOS\n");
         return -1;
-    } 
+    }
 
     salida = fopen(argv[1],"w");
 
@@ -23,7 +24,7 @@ int main (int argc, char** argv)
     /* scanf x; */
     leer(salida, "x", ENTERO);
 
-    /* printf (x > 3); */ 
+    /* printf (x > 3); */
     escribir_operando(salida, "x", 1);
     escribir_operando(salida, "3", 0);
     mayor(salida, 1, 0, etiqueta++);
@@ -35,7 +36,7 @@ int main (int argc, char** argv)
     mayor_igual(salida, 1, 0, etiqueta++);
     escribir(salida, 0, BOOLEANO);
 
-    /* printf (x < 3); */ 
+    /* printf (x < 3); */
     escribir_operando(salida, "x", 1);
     escribir_operando(salida, "3", 0);
     menor(salida, 1, 0, etiqueta++);

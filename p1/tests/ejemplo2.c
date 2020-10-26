@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "generacion.h"
+#include "../src/generacion.h"
 
 int main (int argc, char** argv)
 {
@@ -8,7 +8,7 @@ int main (int argc, char** argv)
     if (argc != 2) {
         fprintf (stdout, "ERROR POCOS ARGUMENTOS\n");
         return -1;
-        } 
+        }
     salida = fopen(argv[1], "w");
 
     escribir_subseccion_data(salida);

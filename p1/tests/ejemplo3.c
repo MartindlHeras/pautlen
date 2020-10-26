@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "generacion.h"
+#include "../src/generacion.h"
 int main (int argc, char** argv)
 {
     FILE * salida;
@@ -24,12 +24,12 @@ int main (int argc, char** argv)
     /* scanf z; */
     leer(salida, "z", ENTERO);
 
-    /* j = - x; */ 
+    /* j = - x; */
     escribir_operando(salida, "x", 1);
     cambiar_signo(salida, 1);
     asignar(salida, "j", 0);
 
-    /* printf j; */ 
+    /* printf j; */
     escribir_operando(salida, "j", 1);
     escribir(salida, 1, ENTERO);
 
@@ -55,7 +55,7 @@ int main (int argc, char** argv)
     multiplicar(salida, 1, 1);
     escribir(salida, 0, ENTERO);
     escribir_fin(salida);
-    
+
     fclose(salida);
     return 0;
 }

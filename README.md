@@ -14,8 +14,9 @@ santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | marti
 
 - [x] Las funciones que hay en generacion.h (dividir)
 - [x] Organizar el código por carpetas
-- [ ] Makefile
-- [ ] Poner cabeceras
+- [x] Makefile
+- [x] Poner cabeceras
+- [ ] Poner cosas en carpetas makefile
 - [ ] Comprobar con los ejemplos del enunciado
 
 ### Comandos útiles
