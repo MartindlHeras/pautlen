@@ -56,5 +56,6 @@ Descripci�n: Definici�n de tokens para el lenguaje ALFA
 
 /* Errores */
 #define TOK_ERROR                -1
+#define TOK_ERRORID                -2
 
 #endif

@@ -43,17 +43,16 @@ return { n_cols+= yyleng; return TOK_RETURN;}
 ">" { n_cols+= yyleng; return TOK_MAYOR;}
 
 [a-zA-Z]([0-9]|[a-zA-Z]){0,99} { n_cols+= yyleng; return TOK_IDENTIFICADOR;}
+[a-zA-Z]([0-9]|[a-zA-Z]){100,} { return TOK_ERRORID;}
 
 [0-9]+ { n_cols+= yyleng; return TOK_CONSTANTE_ENTERA;}
 true { n_cols+= yyleng; return TOK_TRUE;}
 false { n_cols+= yyleng; return TOK_FALSE;}
 
-. { return TOK_ERROR;}
-
-
-
 "\n" { n_cols=1;n_lines++; }
 "\t"+ { n_cols+= yyleng;}
 " "+ { n_cols+= yyleng;}
 "//".* { n_cols+= yyleng;}
+
+. { return TOK_ERROR;}
 %%
