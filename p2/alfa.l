@@ -52,7 +52,8 @@ false { n_cols+= yyleng; return TOK_FALSE;}
 
 
 
-"\n" { n_cols=1;nlines++; }
+"\n" { n_cols=1;n_lines++; }
 "\t"+ { n_cols+= yyleng;}
 " "+ { n_cols+= yyleng;}
-"//".*{ n_cols+= yyleng;}
+"//".* { n_cols+= yyleng;}
+%%

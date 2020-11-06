@@ -11,11 +11,13 @@
 
 #define ERR -1
 
+extern int yylex(void);
+extern size_t yyleng, n_cols, n_lines;
+extern char* yytext;
+extern FILE* fin;
+
 int main(int argc, char const *argv[]) {
-  int yylex();
-  size_t yylen, n_cols, n_lines;
-  char* yytext;
-  FILE* fin, fout;
+  FILE* fout;
   int aux;
 
   if (argc < 3) {
@@ -23,17 +25,17 @@ int main(int argc, char const *argv[]) {
     return ERR;
   }
 
-  if (!(fin = fopen(argv[1], "r");)) {
+  if (!(fin = fopen(argv[1], "r"))) {
     fprintf(stdout, "Error opening %s\n", argv[1]);
     return ERR;
   }
 
-  if (!(fout = fopen(argv[2], "w");)) {
+  if (!(fout = fopen(argv[2], "w"))) {
     fprintf(stdout, "Error opening %s\n", argv[2]);
     return ERR;
   }
 
-  while (aux = yylex()) {
+  while ((aux = yylex())) {
     switch (aux) {
       case TOK_MAIN:
         fprintf(fout, "TOK_MAIN\t%d\t%s\n", aux, yytext);
