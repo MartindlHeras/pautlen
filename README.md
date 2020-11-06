@@ -8,16 +8,10 @@ Santiago Valderrábano | Saúl Almazán | Martín de las Heras
 ------------------------------ | ------------------------------ |--------------------------
 santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | martin.delasheras@estudiante.uam.es
 
-- [ ] Entrega 1
+- [x] Entrega 1
+- [x] Entrega 2
 
 ### Cosas para hacer
-
-- [x] Las funciones que hay en generacion.h (dividir)
-- [x] Organizar el código por carpetas
-- [x] Makefile
-- [x] Poner cabeceras
-- [ ] Poner cosas en carpetas makefile
-- [ ] Comprobar con los ejemplos del enunciado
 
 ### Comandos útiles
 

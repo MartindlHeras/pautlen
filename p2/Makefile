@@ -1,6 +1,10 @@
 ########################################################
-# Makefile
+# Santiago Valderrábano
+# Saúl Almazán
+# Martín de las Heras
+# Grupo 140
 ########################################################
+
 all: pruebaMorfo
 
 pruebaMorfo: pruebaMorfo.c lex.yy.o

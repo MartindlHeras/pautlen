@@ -1,6 +1,6 @@
 /******************************************************
 Nombre: tokens.h
-Descripci�n: Definici�n de tokens para el lenguaje ALFA
+Descripción: Definición de tokens para el lenguaje ALFA
 ******************************************************/
 #ifndef _TOKENS_H
 #define _TOKENS_H
@@ -56,6 +56,6 @@ Descripci�n: Definici�n de tokens para el lenguaje ALFA
 
 /* Errores */
 #define TOK_ERROR                -1
-#define TOK_ERRORID                -2
+#define TOK_ERRORID                -2 //Añadido por nosotros por si el número es muy grande
 
 #endif
