@@ -17,7 +17,7 @@ extern FILE* yyout;
 int main(int argc, char const *argv[]) {
 
   if (argc < 3) {
-    fprintf(stdout, "Missing entry parameters: ./pruebaMorfo <input.txt> <output.txt>\n");
+    fprintf(stdout, "Missing entry parameters: ./pruebaSinta <input.txt> <output.txt>\n");
     return ERR;
   }
 
