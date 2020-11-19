@@ -1,58 +1,61 @@
 %{
-#include "tokens.h"
+#include "y.tab.h"
 size_t n_cols = 1;
 size_t n_lines = 1;
+int is_morpho; // ???????????????????????????????
 
 %}
 %option noyywrap
+%option noinput
+%option nounput
 
 %%
-main { n_cols+= yyleng; return TOK_MAIN;}
-int { n_cols+= yyleng; return TOK_INT;}
-boolean { n_cols+= yyleng; return TOK_BOOLEAN;}
-array { n_cols+= yyleng; return TOK_ARRAY;}
-function { n_cols+= yyleng; return TOK_FUNCTION;}
-if { n_cols+= yyleng; return TOK_IF;}
-else { n_cols+= yyleng; return TOK_ELSE;}
-while { n_cols+= yyleng; return TOK_WHILE;}
-scanf { n_cols+= yyleng; return TOK_SCANF;}
-printf { n_cols+= yyleng; return TOK_PRINTF;}
-return { n_cols+= yyleng; return TOK_RETURN;}
+main { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MAIN;}
+int { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_INT;}
+boolean { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_BOOLEAN;}
+array { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_ARRAY;}
+function { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_FUNCTION;}
+if { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_IF;}
+else { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_ELSE;}
+while { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_WHILE;}
+scanf { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_SCANF;}
+printf { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_PRINTF;}
+return { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_RETURN;}
 
-";" { n_cols+= yyleng; return TOK_PUNTOYCOMA;}
-"," { n_cols+= yyleng; return TOK_COMA;}
-"(" { n_cols+= yyleng; return TOK_PARENTESISIZQUIERDO;}
-")" { n_cols+= yyleng; return TOK_PARENTESISIZQUIERDO;}
-"[" { n_cols+= yyleng; return TOK_CORCHETEIZQUIERDO;}
-"]" { n_cols+= yyleng; return TOK_CORCHETEDERECHO;}
-"{" { n_cols+= yyleng; return TOK_LLAVEIZQUIERDA;}
-"}" { n_cols+= yyleng; return TOK_LLAVEDERECHA;}
-"=" { n_cols+= yyleng; return TOK_ASIGNACION;}
-"+" { n_cols+= yyleng; return TOK_MAS;}
-"-" { n_cols+= yyleng; return TOK_MENOS;}
-"/" { n_cols+= yyleng; return TOK_DIVISION;}
-"*" { n_cols+= yyleng; return TOK_ASTERISCO;}
-"&&" { n_cols+= yyleng; return TOK_AND;}
-"||" { n_cols+= yyleng; return TOK_OR;}
-"!" { n_cols+= yyleng; return TOK_NOT;}
-"==" { n_cols+= yyleng; return TOK_IGUAL;}
-"!=" { n_cols+= yyleng; return TOK_DISTINTO;}
-"<=" { n_cols+= yyleng; return TOK_MENORIGUAL;}
-">=" { n_cols+= yyleng; return TOK_MAYORIGUAL;}
-"<" { n_cols+= yyleng; return TOK_MENOR;}
-">" { n_cols+= yyleng; return TOK_MAYOR;}
+";" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_PUNTOYCOMA;}
+"," { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_COMA;}
+"(" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_PARENTESISIZQUIERDO;}
+")" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_PARENTESISIZQUIERDO;}
+"[" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_CORCHETEIZQUIERDO;}
+"]" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_CORCHETEDERECHO;}
+"{" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_LLAVEIZQUIERDA;}
+"}" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_LLAVEDERECHA;}
+"=" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_ASIGNACION;}
+"+" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MAS;}
+"-" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MENOS;}
+"/" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_DIVISION;}
+"*" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_ASTERISCO;}
+"&&" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_AND;}
+"||" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_OR;}
+"!" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_NOT;}
+"==" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_IGUAL;}
+"!=" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_DISTINTO;}
+"<=" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MENORIGUAL;}
+">=" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MAYORIGUAL;}
+"<" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MENOR;}
+">" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MAYOR;}
 
-[a-zA-Z]([0-9]|[a-zA-Z]){0,99} { n_cols+= yyleng; return TOK_IDENTIFICADOR;}
-[a-zA-Z]([0-9]|[a-zA-Z]){100,} { return TOK_ERRORID;}
+[a-zA-Z]([0-9]|[a-zA-Z]){0,99} { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_IDENTIFICADOR;}
+[a-zA-Z]([0-9]|[a-zA-Z]){100,} { printf("Id error in line:%lu, column:%lu", n_lines, n_cols); return -2;}
 
 [0-9]+ { n_cols+= yyleng; return TOK_CONSTANTE_ENTERA;}
 true { n_cols+= yyleng; return TOK_TRUE;}
 false { n_cols+= yyleng; return TOK_FALSE;}
 
-"\n" { n_cols=1;n_lines++; }
-"\t"+ { n_cols+= yyleng;}
-" "+ { n_cols+= yyleng;}
-"//".* { n_cols+= yyleng;}
+"\n" { n_cols=1; n_lines++;}
+"\t"+ {n_cols+= yyleng;}
+" "+ {n_cols+= yyleng;}
+"//".* {n_cols+= yyleng;}
 
-. { return TOK_ERROR;}
+. {printf("Symbol error in line:%lu, column:%lu", n_lines, n_cols); n_cols++; return -1;}
 %%
