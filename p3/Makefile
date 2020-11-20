@@ -8,12 +8,12 @@
 all: pruebaSinta
 
 pruebaSinta: pruebaSinta.c lex.yy.o y.tab.o
-	gcc -Wall -o pruebaSinta pruebaSinta.c lex.yy.o y.tab.o
+	gcc -Wall -o pruebaSinta pruebaSinta.c y.tab.o lex.yy.o
 
 lex.yy.o: lex.yy.c
 	gcc -Wall -c lex.yy.c
 
-lex.yy.c: alfa.l
+lex.yy.c: alfa.l y.tab.h
 	flex alfa.l
 
 y.tab.o: y.tab.c
@@ -27,4 +27,4 @@ y.tab.h: alfa.y
 
 .PHONY: clean
 clean:
-	rm -rf lex.yy.* pruebaSinta y.tab.* ficheros_prueba_morfologico/misalida*
+	rm -rf lex.yy.* pruebaSinta y.* pruebas/misalida*

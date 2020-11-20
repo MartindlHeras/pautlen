@@ -2,7 +2,7 @@
 #include "y.tab.h"
 size_t n_cols = 1;
 size_t n_lines = 1;
-int is_morpho; // ???????????????????????????????
+int is_morpho;
 
 %}
 %option noyywrap
@@ -46,7 +46,7 @@ return { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_RETURN
 ">" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MAYOR;}
 
 [a-zA-Z]([0-9]|[a-zA-Z]){0,99} { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_IDENTIFICADOR;}
-[a-zA-Z]([0-9]|[a-zA-Z]){100,} { printf("Id error in line:%lu, column:%lu", n_lines, n_cols); return -2;}
+[a-zA-Z]([0-9]|[a-zA-Z]){100,} { printf("****Error en [lin %lu, col %lu]: id demasiado largo\n", n_lines, n_cols); is_morpho=1; return -2;}
 
 [0-9]+ { n_cols+= yyleng; return TOK_CONSTANTE_ENTERA;}
 true { n_cols+= yyleng; return TOK_TRUE;}
@@ -57,5 +57,5 @@ false { n_cols+= yyleng; return TOK_FALSE;}
 " "+ {n_cols+= yyleng;}
 "//".* {n_cols+= yyleng;}
 
-. {printf("Symbol error in line:%lu, column:%lu", n_lines, n_cols); n_cols++; return -1;}
+. {printf("****Error en [lin %lu, col %lu]: simbolo no permitido (%s)\n", n_lines, n_cols, yytext); n_cols++; is_morpho=1; return -1;}
 %%

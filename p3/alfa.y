@@ -6,6 +6,7 @@ void yyerror(const char * s);
 
 %}
 
+%union
 {
     int number;
     char* string;
@@ -68,7 +69,7 @@ void yyerror(const char * s);
 
 programa:
     TOK_MAIN TOK_LLAVEIZQUIERDA declaraciones funciones sentencias TOK_LLAVEDERECHA {
-        fprintf(yyou, ";R1:\t<programa> ::= main { <declaraciones> <funciones> <sentencias> }\n");
+        fprintf(yyout, ";R1:\t<programa> ::= main { <declaraciones> <funciones> <sentencias> }\n");
     };
 
 declaraciones:
@@ -337,6 +338,6 @@ void yyerror(const char *error){
     extern size_t n_cols;
     extern size_t n_lines;
     if(!is_morpho){
-        printf("****Error sintactico en [lin %lu, col %lu]\n", nlines, ncols-yyleng);
+        printf("****Error sintactico en [lin %lu, col %lu]\n", n_lines, n_cols-yyleng);
     }
 }

@@ -10,7 +10,7 @@ santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | marti
 
 - [x] Entrega 1
 - [x] Entrega 2
-- [ ] Entrega 3
+- [x] Entrega 3
 - [ ] Entrega 4
 - [ ] Entrega 5
 
