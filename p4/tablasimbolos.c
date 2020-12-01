@@ -1,7 +1,7 @@
 #include "hash.h"
 
 int flag = 0;
-hashtable *hash_local,*hash_globlal;
+hashtable *hash_local,*hash_global;
 FILE *in,*out;
 
 
@@ -17,7 +17,7 @@ int interaction_table(char * buff){
     if(token2 == NULL){
       result = hash_table_get(hash_local,token1);
       if(result == NULL){
-        result = hash_table_get(hash_globlal,token1);
+        result = hash_table_get(hash_global,token1);
         if(result == NULL){
           fprintf(out, "%s -1\n",token1);
         }
@@ -48,7 +48,7 @@ int interaction_table(char * buff){
   }
   else{
     if(token2 == NULL) {
-      result = hash_table_get(hash_globlal,token1);
+      result = hash_table_get(hash_global,token1);
 
       if(result == NULL){
         fprintf(out, "%s -1\n",token1);
@@ -60,7 +60,7 @@ int interaction_table(char * buff){
     }
     else{
       if(atoi(token2)>0){
-        result_number = hash_table_set(hash_globlal,token1,token2);
+        result_number = hash_table_set(hash_global,token1,token2);
 
         if(result_number== -1){
           fprintf(out, "-1 %s\n",token1);
@@ -71,7 +71,7 @@ int interaction_table(char * buff){
       }
 
       else{
-        result_number = hash_table_set(hash_globlal,token1,token2);
+        result_number = hash_table_set(hash_global,token1,token2);
         flag = 1;
         hash_local = hash_table_create(655386);
         hash_table_set(hash_local,token1,token2);
