@@ -23,4 +23,4 @@ santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | marti
 
 ### Enlaces útiles
 
-- [Santorumada](https://github.com/AlejandroSantorum/PAUTLEN_Assignments)
+- <a href="https://github.com/AlejandroSantorum/PAUTLEN_Assignments" target="_blank">Santorumada</a>

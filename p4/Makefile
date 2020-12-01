@@ -18,4 +18,4 @@ hash.o: hash.c
 
 .PHONY: clean
 clean:
-	rm -rf *.o pruebaSinta pruebas/misalida*
+	rm -rf *.o prueba_tabla pruebas/misalida*

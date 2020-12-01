@@ -1,3 +1,10 @@
+/////////////////////////////////////////////////////////////////////////
+// Santiago Valderrabano Zamorano santiago.valderrabano@estudiante.uam.es
+// Martin de las Heras Moreno martin.delasheras@estudiante.uam.es
+// Saul Almazan saul.almazan@estudiante.uam.es
+// Grupo 140
+/////////////////////////////////////////////////////////////////////////
+
 #include "hash.h"
 
 int flag = 0;
@@ -13,11 +20,11 @@ void interaction_table(char * buff,FILE *out,hash_table_t *hash_global){
   token2 = strtok(NULL,"\t\n");
 
   if(flag == 1){
-    if(token2 == NULL){
+    if(!token2){
       result = hash_table_get(hash_local,token1);
-      if(result == NULL){
+      if(!result){
         result = hash_table_get(hash_global,token1);
-        if(result == NULL){
+        if(!result){
           fprintf(out, "%s -1\n",token1);
         }
         else{

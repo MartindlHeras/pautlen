@@ -1,9 +1,16 @@
+/////////////////////////////////////////////////////////////////////////
+// Santiago Valderrabano Zamorano santiago.valderrabano@estudiante.uam.es
+// Martin de las Heras Moreno martin.delasheras@estudiante.uam.es
+// Saul Almazan saul.almazan@estudiante.uam.es
+// Grupo 140
+/////////////////////////////////////////////////////////////////////////
+
 #include "hash.h"
 
 struct input_s{
     char* value;
     char* key;
-    struct input_s* succ;
+    struct input_s* next;
 };
 
 struct hash_table_s{
@@ -33,13 +40,10 @@ input_t* hash_table_pair(char* key, char* value){
     if (!(pair = malloc(sizeof(input_t))))
         return NULL;
 
-    if (!(pair->key = strdup(key)))
+    if (!(pair->key = strdup(key)) || !(pair->value = strdup(value)))
         return NULL;
 
-    if (!(pair->key = strdup(value)))
-        return NULL;
-
-    pair->succ = NULL;
+    pair->next = NULL;
     
     return pair;
 }
@@ -54,7 +58,7 @@ int hash_table_hash(hash_table_t* hash_table, char* key){
         i++;
     }
 
-    return hash_value%hash_table->size; 
+    return hash_value%hash_table->size;
 }
 
 int hash_table_set(hash_table_t* hash_table, char* key, char* value){
@@ -64,7 +68,7 @@ int hash_table_set(hash_table_t* hash_table, char* key, char* value){
     next = hash_table->table[bin];
     while (strcmp(key, pair->key) > 0 && pair->key && pair){
         last = next;
-        pair = pair->succ;
+        pair = pair->next;
     }
 
     if (strcmp(key, pair->key) == 0 && pair->key && pair)
@@ -73,14 +77,14 @@ int hash_table_set(hash_table_t* hash_table, char* key, char* value){
     pair = hash_table_pair(key, value);
 
     if (next == hash_table->table[bin]){
-        pair->succ = next;
+        pair->next = next;
         hash_table->table[bin] = pair;
     }
     else if (!next)
-        last->succ = pair;
+        last->next = pair;
     else {
-        pair->succ = next;
-        last->succ = pair;
+        pair->next = next;
+        last->next = pair;
     }
     
     return 0;
@@ -93,7 +97,7 @@ char* hash_table_get(hash_table_t* hash_table, char* key){
     pair = hash_table->table[bin];
 
     while (strcmp(key, pair->key) > 0 && pair->key && pair)
-        pair = pair->succ;
+        pair = pair->next;
 
     if (strcmp(key, pair->key) != 0 || !pair->key || !pair)
         return NULL;

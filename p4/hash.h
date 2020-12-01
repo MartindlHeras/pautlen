@@ -1,3 +1,10 @@
+/////////////////////////////////////////////////////////////////////////
+// Santiago Valderrabano Zamorano santiago.valderrabano@estudiante.uam.es
+// Martin de las Heras Moreno martin.delasheras@estudiante.uam.es
+// Saul Almazan saul.almazan@estudiante.uam.es
+// Grupo 140
+/////////////////////////////////////////////////////////////////////////
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
