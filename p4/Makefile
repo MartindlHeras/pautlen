@@ -7,11 +7,11 @@
 
 all: prueba_tabla
 
-prueba_tabla: prueba_tabla.c tablasimbolos.o hash.o
-	gcc -Wall -o prueba_tabla prueba_tabla.c tablasimbolos.o hash.o
+prueba_tabla: prueba_tabla.c tabla_simbolos.o hash.o
+	gcc -Wall -o prueba_tabla prueba_tabla.c tabla_simbolos.o hash.o
 
-tablasimbolos.o: tablasimbolos.c hash.h
-	gcc -Wall -c tablasimbolos.c
+tabla_simbolos.o: tabla_simbolos.c hash.h
+	gcc -Wall -c tabla_simbolos.c
 
 hash.o: hash.c
 	gcc -Wall -c hash.c

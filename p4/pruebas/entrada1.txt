@@ -13,3 +13,8 @@ funcion1	100
 tres	3
 uno
 funcion1
+tres
+dos
+cuatro
+cierre	-999
+funcion1

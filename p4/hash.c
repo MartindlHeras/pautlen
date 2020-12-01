@@ -24,7 +24,8 @@ hash_table_t* hash_table_create(int size){
 
     if (size <= 0)
         return NULL;
-
+    if (!(hash_table = malloc(sizeof(hash_table_t))))
+        return NULL;
     if (!(hash_table->table = malloc(sizeof(input_t*)*size)))
         return NULL;
     for (i = 0; i < size; i++)
@@ -66,12 +67,13 @@ int hash_table_set(hash_table_t* hash_table, char* key, char* value){
     int bin  = hash_table_hash(hash_table, key);
 
     next = hash_table->table[bin];
-    while (strcmp(key, pair->key) > 0 && pair->key && pair){
+    
+    while (next && next->key && strcmp(key, next->key) > 0){
         last = next;
-        pair = pair->next;
+        next = next->next;
     }
 
-    if (strcmp(key, pair->key) == 0 && pair->key && pair)
+    if (next && next->key && strcmp(key, next->key) == 0)
         return -1;
     
     pair = hash_table_pair(key, value);
@@ -96,10 +98,10 @@ char* hash_table_get(hash_table_t* hash_table, char* key){
 
     pair = hash_table->table[bin];
 
-    while (strcmp(key, pair->key) > 0 && pair->key && pair)
+    while (pair && pair->key && strcmp(key, pair->key) > 0)
         pair = pair->next;
 
-    if (strcmp(key, pair->key) != 0 || !pair->key || !pair)
+    if (!pair || !pair->key || strcmp(key, pair->key) != 0)
         return NULL;
 
     return pair->value;
