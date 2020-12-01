@@ -1,11 +1,11 @@
 #include "hash.h"
-
+#define SIZE 32;
 int flag = 0;
-hashtable *hash_local,*hash_global;
-FILE *in,*out;
+hash_table_t *hash_local,*hash_global;
+FILE *out;
 
 
-int interaction_table(char * buff){
+void interaction_table(char * buff,FILE *out){
 
   char *token1,*token2 ,*result;
   int result_number;
