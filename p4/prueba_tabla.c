@@ -1,11 +1,13 @@
 #include "tablasimbolos.h"
 
-int int main(int argc, char const **argv) {
-  char *entry,*exit,*buff,*readed;
-  FILE *in;
+int main(int argc, char const **argv) {
+  char *buff,*readed;
+  FILE *in,*out;
+  hash_table_t *hash_global;
+  const char *entry,*exit;
 
 
-  if (argv != 3){
+  if (argc != 3){
     fprintf(stderr, "Error en los parametros de entrada");
   }
 
@@ -16,7 +18,7 @@ int int main(int argc, char const **argv) {
     fprintf(stderr, "Error en el fichero de entrada");
     return -1;
   }
-  out = fopen(salida,"w");
+  out = fopen(exit,"w");
   if (!out){
     fprintf(stderr, "Error en el fichero de salida");
     return -1;
@@ -29,7 +31,7 @@ int int main(int argc, char const **argv) {
   readed = fgets(buff , SIZE, in);
 
   while (readed){
-    interaction_table(buff,out);
+    interaction_table(buff,out, hash_global);
     readed = fgets(buff,SIZE,in);
   }
 

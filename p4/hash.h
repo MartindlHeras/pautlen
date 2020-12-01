@@ -3,6 +3,7 @@
 #include <string.h>
 #include <limits.h>
 
+
 typedef struct input_s input_t;
 typedef struct hash_table_s hash_table_t;
 

@@ -14,7 +14,7 @@ tablasimbolos.o: tablasimbolos.c hash.h
 	gcc -Wall -c tablasimbolos.c
 
 hash.o: hash.c
-	gcc -Wall hash.c
+	gcc -Wall -c hash.c
 
 .PHONY: clean
 clean:
