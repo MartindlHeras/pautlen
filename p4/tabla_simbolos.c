@@ -18,7 +18,7 @@ void interact_table(char *buff, FILE *out, hash_table_t *hash_global){
 
   token1 = strtok(buff, "\t\n");
   token2 = strtok(NULL, "\t\n");
-
+  
   if(flag == 1){
     if(!token2){
       result = hash_table_get(hash_local, token1);
@@ -39,7 +39,7 @@ void interact_table(char *buff, FILE *out, hash_table_t *hash_global){
       if(strcmp(token1, "cierre")==0 && strcmp(token2, "-999")==0){
         flag = 0;
         free(hash_local);
-        fprintf(out, "cierre");
+        fprintf(out, "cierre\n");
       }
       else{
         result_number = hash_table_set(hash_local, token1, token2);
@@ -78,7 +78,7 @@ void interact_table(char *buff, FILE *out, hash_table_t *hash_global){
       else{
         result_number = hash_table_set(hash_global, token1, token2);
         flag = 1;
-        hash_local = hash_table_create(655386);
+        hash_local = hash_table_create(65536);
         hash_table_set(hash_local, token1, token2);
         fprintf(out, "%s\n", token1);
       }

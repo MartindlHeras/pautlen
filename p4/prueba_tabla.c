@@ -20,7 +20,7 @@ int main(int argc, char const **argv) {
     return -1;
   }
 
-  hash_global = hash_table_create(432243);
+  hash_global = hash_table_create(65536);
 
   buff = (char*)malloc(SIZE * sizeof(char));
   if(!buff){
