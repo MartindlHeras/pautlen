@@ -16,10 +16,8 @@ santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | marti
 
 ### Cosas para hacer
 
-### Comandos útiles
-
-- nasm -g –o [<fichero objeto (.o)>] –f elf <fichero fuente (.asm)>
-- gcc -o <fichero ejecutable> <fichero objeto 1> <fichero objeto 2>
+- [ ] Editar alfa-y
+- [ ] Makefile
 
 ### Enlaces útiles
 

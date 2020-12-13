@@ -1,5 +1,7 @@
 %{
 #include "y.tab.h"
+#include "alfa.h"
+
 size_t n_cols = 1;
 size_t n_lines = 1;
 int is_morpho;
@@ -45,10 +47,16 @@ return { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_RETURN
 "<" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MENOR;}
 ">" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MAYOR;}
 
-[a-zA-Z]([0-9]|[a-zA-Z]){0,99} { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_IDENTIFICADOR;}
+[a-zA-Z]([0-9]|[a-zA-Z]){0,99} { 
+    n_cols+= yyleng;
+    fprintf(yyout, ";D:\t%s\n", yytext);
+    strcpy(yylval.attributes.lexeme, yytext);
+    return TOK_IDENTIFICADOR;
+    }
+
 [a-zA-Z]([0-9]|[a-zA-Z]){100,} { printf("****Error en [lin %lu, col %lu]: id demasiado largo\n", n_lines, n_cols); is_morpho=1; return -2;}
 
-[0-9]+ { n_cols+= yyleng; return TOK_CONSTANTE_ENTERA;}
+[0-9]+ { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); yylval.attributes.int_value = atoi(yytext); return TOK_CONSTANTE_ENTERA;}
 true { n_cols+= yyleng; return TOK_TRUE;}
 false { n_cols+= yyleng; return TOK_FALSE;}
 

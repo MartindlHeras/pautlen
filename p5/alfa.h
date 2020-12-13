@@ -21,8 +21,7 @@
 * ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
 */
 
-typedef struct _attribute_type
-{
+typedef struct _attribute_type{
     int type;
     int value;
     int label;
