@@ -4,9 +4,11 @@ Profesor: Kostadin Koroutchev (k.koroutchev@uam.es)
 
 ### Grupo 1401
 
-Santiago Valderrábano | Saúl Almazán | Martín de las Heras
------------------------------- | ------------------------------ |--------------------------
-santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | martin.delasheras@estudiante.uam.es
+Santiago Valderrábano | santiago.valderrabano@estudiante.uam.es
+------------------------------ | ------------------------------
+Saúl Almazán | saul.almazan@estudiante.uam.es
+------------------------------ | ------------------------------
+Martín de las Heras | martin.delasheras@estudiante.uam.es
 
 - [x] Entrega 1
 - [x] Entrega 2
@@ -16,7 +18,9 @@ santiago.valderrabano@estudiante.uam.es | saul.almazan@estudiante.uam.es | marti
 
 ### Cosas para hacer
 
-- [ ] Editar alfa-y
+- [ ] Editar alfa.y
+- [ ] Ficheros errores
+- [ ] Ficheros prueba
 - [ ] Makefile
 
 ### Enlaces útiles
