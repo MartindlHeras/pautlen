@@ -238,7 +238,7 @@ exp:
         fprintf(yyout, ";R75:\t<exp> ::= <exp> * <exp>\n");
     } | 
     TOK_MENOS exp {
-        fprintf(yyout, ";R76:\t<exp> ::= -<exp>\n");
+        fprintf(yyout, ";R76:\t<exp> ::= - <exp>\n");
     } | 
     exp TOK_AND exp {
         fprintf(yyout, ";R77:\t<exp> ::= <exp> && <exp>\n");
@@ -247,7 +247,7 @@ exp:
         fprintf(yyout, ";R78:\t<exp> ::= <exp> || <exp>\n");
     } | 
     TOK_NOT exp {
-        fprintf(yyout, ";R79:\t<exp> ::= !<exp>\n");
+        fprintf(yyout, ";R79:\t<exp> ::= ! <exp>\n");
     } |
     identificador {
         fprintf(yyout, ";R80:\t<exp> ::= <identificador>\n");
