@@ -4,10 +4,10 @@ Profesor: Kostadin Koroutchev (k.koroutchev@uam.es)
 
 ### Grupo 1401
 
+Nombre | Mail
+------------------------------ | ------------------------------
 Santiago Valderrábano | santiago.valderrabano@estudiante.uam.es
------------------------------- | ------------------------------
 Saúl Almazán | saul.almazan@estudiante.uam.es
------------------------------- | ------------------------------
 Martín de las Heras | martin.delasheras@estudiante.uam.es
 
 - [x] Entrega 1
@@ -22,6 +22,10 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 - [ ] Ficheros errores
 - [ ] Ficheros prueba
 - [ ] Makefile
+- [ ] Corregir morfo
+- [ ] Corregir tabla símbolos
+- [ ] Corregir bison
+- [ ] Dividir entre 0
 
 ### Enlaces útiles
 
