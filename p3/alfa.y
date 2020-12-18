@@ -60,8 +60,7 @@ void yyerror(const char * s);
 
 
 %left TOK_IGUAL TOK_DISTINTO TOK_MENORIGUAL TOK_MAYORIGUAL TOK_MENOR TOK_MAYOR
-%left TOK_AND 
-%left TOK_OR
+%left TOK_AND TOK_OR
 %left TOK_MAS TOK_MENOS
 %left TOK_DIVISION TOK_ASTERISCO
 %right TOK_NOT
@@ -134,6 +133,22 @@ funcion:
     };
 
 parametros_funcion:
+    parametro_funcion resto_parametros_funcion {
+        fprintf(yyout, ";R23:\t<parametros_funcion> ::= <parametro_funcion> <resto_parametros_funcion>\n");
+    } |
+    %empty {
+        fprintf(yyout, ";R24:\t<parametros_funcion> ::=\n");
+    };
+
+resto_parametros_funcion:
+    TOK_PUNTOYCOMA parametro_funcion resto_parametros_funcion {
+        fprintf(yyout, ";R25:\t<resto_parametros_funcion> ::= ; <parametro_funcion> <resto_parametros_funcion>\n");
+    } |
+    %empty {
+        fprintf(yyout, ";R26:\t<resto_parametros_funcion> ::=\n");
+    };
+
+parametro_funcion:
     tipo identificador {
         fprintf(yyout, ";R27:\t<parametro_funcion> ::= <tipo> <identificador>\n");
     };
@@ -143,7 +158,7 @@ declaraciones_funcion:
         fprintf(yyout, ";R28:\t<declaraciones_funcion> ::= <declaraciones>\n");
     } | 
     %empty {
-        fprintf(yyout, ";R28:\t<declaraciones_funcion> ::=\n");
+        fprintf(yyout, ";R29:\t<declaraciones_funcion> ::=\n");
     };
 
 sentencias:
@@ -194,14 +209,14 @@ asignacion:
 
 elemento_vector:
     identificador TOK_CORCHETEIZQUIERDO exp TOK_CORCHETEDERECHO {
-        fprintf(yyout, ";R48:\t<elemento_vector> ::= <identificador>\n");
+        fprintf(yyout, ";R48:\t<elemento_vector> ::= <identificador> [ <exp> ]\n");
     };
 
 condicional:
     TOK_IF TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA {
         fprintf(yyout, ";R50:\t<condicional> ::= if ( <exp> ) { <sentencias> }\n");
     } |
-    TOK_IF TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA TOK_ELSE TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA{
+    TOK_IF TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA TOK_ELSE TOK_LLAVEIZQUIERDA exp TOK_LLAVEDERECHA{
         fprintf(yyout, ";R50:\t<condicional> ::= if ( <exp> ) { <sentencias> } else { <sentencias> }\n");
     };
 
@@ -257,10 +272,10 @@ exp:
         fprintf(yyout, ";R81:\t<exp> ::= <constante>\n");
     } |
     TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO {
-        fprintf(yyout, ";R82:\t<exp> ::= (<exp>)\n");
+        fprintf(yyout, ";R82:\t<exp> ::= ( <exp> )\n");
     } | 
     TOK_PARENTESISIZQUIERDO comparacion TOK_PARENTESISDERECHO {
-        fprintf(yyout, ";R83:\t<exp> ::= (<comparacion>)\n");
+        fprintf(yyout, ";R83:\t<exp> ::= ( <comparacion> )\n");
     } | 
     elemento_vector {
         fprintf(yyout, ";R85:\t<exp> ::= <elemento_vector>\n");
@@ -307,10 +322,10 @@ comparacion:
 
 constante:
     constante_entera {
-        fprintf(yyout, ";R99:\t<constante> ::= <constante_entera>\n");
+        fprintf(yyout, ";R100:\t<constante> ::= <constante_entera>\n");
     } | 
     constante_logica {
-        fprintf(yyout, ";R100:\t<constante> ::= <constante_logica>\n");
+        fprintf(yyout, ";R101:\t<constante> ::= <constante_logica>\n");
     };
 
 constante_logica:
