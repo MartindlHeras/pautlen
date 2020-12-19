@@ -58,8 +58,8 @@ int close_scope(symbol_table *hashes){
 
 symbol *search_table(symbol_table *hashes, char *key){
 
-  if(!hashes) return -1;
-  if(!key) return -1;
+  if(!hashes) return NULL;
+  if(!key) return NULL;
 
   symbol *res_value;
 

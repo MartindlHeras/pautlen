@@ -1,6 +1,6 @@
 %{
-#include "y.tab.h"
 #include "alfa.h"
+#include "y.tab.h"
 
 size_t n_cols = 1;
 size_t n_lines = 1;
@@ -50,7 +50,7 @@ return { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_RETURN
 true { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_TRUE;}
 false { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_FALSE;}
 
-[0-9]+ { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); yylval.attributes.int_value = atoi(yytext); return TOK_CONSTANTE_ENTERA;}
+[0-9]+ { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); yylval.attributes.value = atoi(yytext); return TOK_CONSTANTE_ENTERA;}
 
 [a-zA-Z]([0-9]|[a-zA-Z]){0,99} { 
     n_cols+= yyleng;

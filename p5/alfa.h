@@ -9,7 +9,6 @@
 #define ALFA_H
 
 #include "generacion.h"
-#include "hash.h"
 #include "tabla_simbolos.h"
 
 #define MAX_VECTOR_SIZE 64

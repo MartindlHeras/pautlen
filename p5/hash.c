@@ -119,7 +119,7 @@ symbol* hash_table_get(hash_table_t* hash_table, char* key){
 
 symbol* symbol_create(char *id, int symb_cat, int cat, int type, int size, int num_param, int position, int value, int num_local_var){
     symbol *new;
-
+    new = calloc(1,sizeof(symbol));
     strcpy(new->id, id);
     new->symb_cat = symb_cat;
     new->cat = cat;
@@ -131,4 +131,8 @@ symbol* symbol_create(char *id, int symb_cat, int cat, int type, int size, int n
     new->num_local_var = num_local_var;
 
     return new;
+}
+
+void symbol_delete(symbol *symbol) {
+    if (symbol) free(symbol);    
 }
