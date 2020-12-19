@@ -341,11 +341,52 @@ bloque:
     };
 
 asignacion:
-    identificador TOK_ASIGNACION exp {
+    TOK_IDENTIFICADOR TOK_ASIGNACION exp {
         fprintf(yyout, ";R43:\t<asignacion> ::= <identificador> = <exp>\n");
+
+        aux_symb = search_table(&symbol_table, $1.lexeme);
+        if(!aux_symb){
+            printf("****Error semántico en lin %d: Asignacion incompatible.\n",n_lines);
+            return -1;
+        }
+
+        if(aux_symb->symb_cat == FUNCTION) return -1;
+
+        if(aux_symb->symb_cat == VECTOR) return -1;
+
+        if(aux_symb->type != $3.type){
+            printf("****Error semántico en lin %d: Asignacion incompatible.\n",n_lines);
+            return -1;
+        }
+
+        if(func_flag_dec == 1){
+
+            if(aux_symb->symb_cat == PARAMETER){
+                fprintf(yyout, ";escribirParametro\n");
+			    escribirParametro(yyout, aux_symb->position, num_params);
+            }
+            else
+            {
+                fprintf(yyout, ";escribirVariableLocal\n");
+                escribirVariableLocal(yyout, aux->position);
+            }
+
+            fprintf(yyout, ";asignarDestinoEnPila\n");
+		    asignarDestinoEnPila(yyout, $3.is_address);
+        }
+        else
+        {
+            fprintf(yyout, ";asignar\n");
+		    asignar(yyout, $1.lexeme, $3.is_address);
+        }
+
     } |
     elemento_vector TOK_ASIGNACION exp {
         fprintf(yyout, ";R44:\t<asignacion> ::= <elemento_vector> = <exp>\n");
+
+
+
+        
     };
 
 elemento_vector:
