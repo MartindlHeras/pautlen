@@ -183,7 +183,7 @@ clase_vector:
     TOK_ARRAY tipo TOK_CORCHETEIZQUIERDO constante_entera TOK_CORCHETEDERECHO {
         fprintf(yyout, ";R15:\t<clase_vector> ::= array <tipo> [ <constante_entera> ]\n");
         if($4.int_value > MAX || $4.int_value <= 0){
-            printf("****Error semantico en lin %lu: El tamanyo del vector <nombre_vector> excede los limites permitidos (1,64).\n", n_lines);
+            printf("****Error semantico en lin %lu: El tamanyo del vector %s excede los limites permitidos (1,64).\n", n_lines, $4.lexeme);
             return -1;
         }
         $$.int_value = $4.int_value;
@@ -345,14 +345,10 @@ asignacion:
         fprintf(yyout, ";R43:\t<asignacion> ::= <identificador> = <exp>\n");
 
         aux_symb = search_table(&symbol_table, $1.lexeme);
-        if(!aux_symb){
+        if(!aux_symb || aux_symb->symb_cat == FUNCTION || aux_symb->cat == VECTOR){
             printf("****Error semántico en lin %d: Asignacion incompatible.\n",n_lines);
             return -1;
         }
-
-        if(aux_symb->symb_cat == FUNCTION) return -1;
-
-        if(aux_symb->symb_cat == VECTOR) return -1;
 
         if(aux_symb->type != $3.type){
             printf("****Error semántico en lin %d: Asignacion incompatible.\n",n_lines);
@@ -384,9 +380,28 @@ asignacion:
     elemento_vector TOK_ASIGNACION exp {
         fprintf(yyout, ";R44:\t<asignacion> ::= <elemento_vector> = <exp>\n");
 
-
-
+        if($1.type != $3.type){
+            printf("****Error semantico en linea %d: Asignacion incompatible\n", n_lines);
+            return -1;
+        }
         
+        aux_symb = search_table(&symbol_table, $1.lexeme)
+        if(!aux_symb){
+            printf("****Error semantico en linea %d: Acceso a variable no delcarada %s\n", n_lines, $1.lexeme);
+            return -1;
+        }
+
+        if(aux_symb->symb_cat == FUNCTION || aux_symb->cat != VECTOR){
+            printf("****Error semántico en lin %d: Asignacion incompatible.\n",n_lines);
+            return -1;
+        }
+
+        if($1.index_is_address == 0) escribir_operando(yyout, $1.value, $1.index_is_address);
+        if($1.index_is_address == 1) escribir_operando(yyout, $1.index, $1.index_is_address);
+
+        escribir_elemento_vector(yyout, $1.lexeme, aux_symb->size, $3.is_address);
+        asignarDestinoEnPila(yyout, $3.is_address);
+
     };
 
 elemento_vector:

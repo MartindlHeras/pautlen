@@ -18,10 +18,12 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 
 ### Cosas para hacer
 
-- [ ] Editar hash.h
-- [ ] Editar hash.c
-- [ ] Editar tabla_simbolos.h
-- [ ] Editar tabla_simbolos.c
+- [x] Editar hash.h
+- [x] Editar hash.c
+- [x] Editar tabla_simbolos.h
+- [x] Editar tabla_simbolos.c
+- [ ] Symbol delete
+- [ ] Quitar fprintf extra
 - [ ] Editar alfa.y
 - [x] Ficheros errores
 - [x] Ficheros prueba
