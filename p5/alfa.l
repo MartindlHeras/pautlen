@@ -27,7 +27,7 @@ return { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_RETURN
 ";" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_PUNTOYCOMA;}
 "," { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_COMA;}
 "(" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_PARENTESISIZQUIERDO;}
-")" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_PARENTESISIZQUIERDO;}
+")" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_PARENTESISDERECHO;}
 "[" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_CORCHETEIZQUIERDO;}
 "]" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_CORCHETEDERECHO;}
 "{" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_LLAVEIZQUIERDA;}
@@ -47,6 +47,11 @@ return { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_RETURN
 "<" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MENOR;}
 ">" { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MAYOR;}
 
+true { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_TRUE;}
+false { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_FALSE;}
+
+[0-9]+ { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); yylval.attributes.int_value = atoi(yytext); return TOK_CONSTANTE_ENTERA;}
+
 [a-zA-Z]([0-9]|[a-zA-Z]){0,99} { 
     n_cols+= yyleng;
     fprintf(yyout, ";D:\t%s\n", yytext);
@@ -56,9 +61,6 @@ return { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_RETURN
 
 [a-zA-Z]([0-9]|[a-zA-Z]){100,} { printf("****Error en [lin %lu, col %lu]: id demasiado largo\n", n_lines, n_cols); is_morpho=1; return -2;}
 
-[0-9]+ { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); yylval.attributes.int_value = atoi(yytext); return TOK_CONSTANTE_ENTERA;}
-true { n_cols+= yyleng; return TOK_TRUE;}
-false { n_cols+= yyleng; return TOK_FALSE;}
 
 "\n" { n_cols=1; n_lines++;}
 "\t"+ {n_cols+= yyleng;}

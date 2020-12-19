@@ -56,6 +56,6 @@ Descripción: Definición de tokens para el lenguaje ALFA
 
 /* Errores */
 #define TOK_ERROR                -1
-#define TOK_ERRORID                -2 //Añadido por nosotros por si el número es muy grande
+#define TOK_ERRORID              -2 //Añadido por nosotros por si el número es muy grande
 
 #endif

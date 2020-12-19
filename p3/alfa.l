@@ -53,6 +53,7 @@ true { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_TRUE;}
 false { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_FALSE;}
 
 [0-9]+ { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_CONSTANTE_ENTERA;}
+
 [a-zA-Z]([0-9]|[a-zA-Z]){0,99} { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_IDENTIFICADOR;}
 [a-zA-Z]([0-9]|[a-zA-Z]){100,} { printf("****Error en [lin %lu, col %lu]: id demasiado largo\n", n_lines, n_cols); is_morpho=1; return -2;}
 
