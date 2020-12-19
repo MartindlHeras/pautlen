@@ -116,27 +116,22 @@ int label = 0;
 programa:
     escritura_cabecera TOK_MAIN TOK_LLAVEIZQUIERDA declaraciones escritura_codigo funciones escritura_main sentencias TOK_LLAVEDERECHA {
         fprintf(yyout, ";R1:\t<programa> ::= main { <declaraciones> <funciones> <sentencias> }\n");
-        fprintf(yyout, ";escribir_fin\n");
         escribir_fin(yyout);
     };
 
 escritura_cabecera: 
     %empty {
-        fprintf(yyout, ";escribir_subseccion_data\n");
         escribir_subseccion_data(yyout);
-        fprintf(yyout, ";escribir_cabecera_bss\n");
         escribir_cabecera_bss(yyout);
     };
 
 escritura_codigo: 
     %empty {
-        fprintf(yyout, ";escribir_segmento_codigo\n");
         escribir_segmento_codigo(yyout);
     };
 
 escritura_main: 
     %empty {
-        fprintf(yyout, ";escribir_inicio_main\n");
         escribir_inicio_main(yyout);
     };
 
@@ -226,7 +221,7 @@ funcion:
         if(close_scope(&aux_symbol_table) == -1) return -1;
 
         func_flag_dec = 0;
-
+        symbol_delete(aux_symb);
     };
 
 funcion_declaracion: 
@@ -245,6 +240,7 @@ funcion_declaracion:
 
         insert_table(&aux_symbol_table, $1.lexeme, aux_symb);
 
+        symbol_delete(aux_symb);
     };
 
 nombre_funcion: TOK_FUNCTION tipo TOK_IDENTIFICADOR {
@@ -269,7 +265,8 @@ nombre_funcion: TOK_FUNCTION tipo TOK_IDENTIFICADOR {
 
         strcpy($$.lexeme, $3.lexeme);
         $$.type = curr_type;
-    
+
+        symbol_delete(aux_symb);
     };
 
 parametros_funcion:
@@ -289,7 +286,7 @@ resto_parametros_funcion:
     };
 
 parametro_funcion:
-    tipo identificador_parametro_funcion {
+    tipo idpf {
         fprintf(yyout, ";R27:\t<parametro_funcion> ::= <tipo> <identificador>\n");
         num_params++;
         pos_params++;
@@ -359,21 +356,17 @@ asignacion:
         if(func_flag_dec == 1){
 
             if(aux_symb->symb_cat == PARAMETER){
-                fprintf(yyout, ";escribirParametro\n");
 			    escribirParametro(yyout, aux_symb->position, num_params);
             }
             else
             {
-                fprintf(yyout, ";escribirVariableLocal\n");
                 escribirVariableLocal(yyout, aux_symb->position);
             }
 
-            fprintf(yyout, ";asignarDestinoEnPila\n");
 		    asignarDestinoEnPila(yyout, $3.is_address);
         }
         else
         {
-            fprintf(yyout, ";asignar\n");
 		    asignar(yyout, $1.lexeme, $3.is_address);
         }
 
@@ -406,6 +399,7 @@ asignacion:
 
         escribir_elemento_vector(yyout, $1.lexeme, aux_symb->size, $3.is_address);
         asignarDestinoEnPila(yyout, $3.is_address);
+        symbol_delete(aux_symb);
 
     };
 
@@ -442,7 +436,7 @@ elemento_vector:
         $$.type = aux_symb->type;
         $$.is_address = 1;
         strcpy($$.lexeme, $1.lexeme);
-
+        symbol_delete(aux_symb);
     };
 
 condicional:
@@ -511,6 +505,7 @@ lectura:
         }
 
         leer(yyout, $2.lexeme, aux_symb->type);
+        symbol_delete(aux_symb);
     };
 
 escritura:
@@ -703,6 +698,7 @@ exp:
             operandoEnPilaAArgumento(yyout, 1);
             $$.is_address = 0;
         }
+        symbol_delete(aux_symb);
 
     } |
     constante {
@@ -772,7 +768,7 @@ exp:
         func_call = 0;
         $$.is_address = 0;
         $$.type = aux_symb->type;
-
+        symbol_delete(aux_symb);
     };
 
 lista_expresiones:
@@ -966,9 +962,10 @@ identificador:
             insert_table(&aux_symbol_table, $1.lexeme, aux_symb);
             declarar_variable(yyout, $1.lexeme, curr_type, curr_len);
         }
+        symbol_delete(aux_symb);
     };
 
-identificador_parametro_funcion: 
+idpf: 
     TOK_IDENTIFICADOR {
         fprintf(yyout, ";R108:\t<identificador> ::= TOK_IDENTIFICADOR\n");
 
@@ -980,6 +977,7 @@ identificador_parametro_funcion:
         aux_symb = symbol_create($1.lexeme, PARAMETER, curr_type, SCALAR, -1, 1, -1, pos_params, -1);
 
         insert_table(&aux_symbol_table, $1.lexeme, aux_symb);
+        symbol_delete(aux_symb);
     };
 
 %%

@@ -18,21 +18,9 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 
 ### Cosas para hacer
 
-- [x] Editar hash.h
-- [x] Editar hash.c
-- [x] Editar tabla_simbolos.h
-- [x] Editar tabla_simbolos.c
-- [ ] Symbol delete
-- [ ] Quitar fprintf extra
-- [ ] Mirar buff
-- [x] Editar alfa.y
-- [x] Ficheros errores
-- [x] Ficheros prueba
 - [ ] Makefile
-- [x] Corregir morfo
-- [x] Corregir tabla símbolos
-- [x] Corregir bison
-- [x] Dividir entre 0
+- [ ] No tenemos tabla y da segmentation fault
+- [ ] Ejemplos (compilar?)
 
 ### Enlaces útiles
 
