@@ -7,17 +7,6 @@
 
 #include "hash.h"
 
-struct input_s{
-    char* value;
-    char* key;
-    struct input_s* next;
-};
-
-struct hash_table_s{
-    int size;
-    struct input_s** table;
-};
-
 hash_table_t* hash_table_create(int size){
     int i;
     hash_table_t* hash_table = NULL;
@@ -35,14 +24,24 @@ hash_table_t* hash_table_create(int size){
     return hash_table;    
 }
 
-input_t* hash_table_pair(char* key, char* value){
+input_t* hash_table_pair(char* key, symbol* value){
     input_t* pair;
 
     if (!(pair = malloc(sizeof(input_t))))
         return NULL;
 
-    if (!(pair->key = strdup(key)) || !(pair->value = strdup(value)))
+    if (!(pair->key = strdup(key)))
         return NULL;
+
+    strcpy(pair->value.id, value->id);
+    pair->value.symb_cat = value->symb_cat;
+    pair->value.cat = value->cat;
+    pair->value.type = value->type;
+    pair->value.size = value->size;
+    pair->value.num_param = value->num_param;
+    pair->value.position = value->position;
+    pair->value.value = value->value;
+    pair->value.num_local_var = value->num_local_var;
 
     pair->next = NULL;
     
@@ -62,7 +61,7 @@ int hash_table_hash(hash_table_t* hash_table, char* key){
     return hash_value%hash_table->size;
 }
 
-int hash_table_set(hash_table_t* hash_table, char* key, char* value){
+int hash_table_set(hash_table_t* hash_table, char* key, symbol* value){
     input_t* pair = NULL, * next = NULL, * last = NULL;
     int bin  = hash_table_hash(hash_table, key);
 
@@ -73,8 +72,19 @@ int hash_table_set(hash_table_t* hash_table, char* key, char* value){
         next = next->next;
     }
 
-    if (next && next->key && strcmp(key, next->key) == 0)
-        return -1;
+    if (next && next->key && strcmp(key, next->key) == 0){
+        strcpy(pair->value.id, value->id);
+        pair->value.symb_cat = value->symb_cat;
+        pair->value.cat = value->cat;
+        pair->value.type = value->type;
+        pair->value.size = value->size;
+        pair->value.num_param = value->num_param;
+        pair->value.position = value->position;
+        pair->value.value = value->value;
+        pair->value.num_local_var = value->num_local_var;
+
+        return 0;
+    }
     
     pair = hash_table_pair(key, value);
 
@@ -92,7 +102,7 @@ int hash_table_set(hash_table_t* hash_table, char* key, char* value){
     return 0;
 }
 
-char* hash_table_get(hash_table_t* hash_table, char* key){
+symbol* hash_table_get(hash_table_t* hash_table, char* key){
     input_t* pair;
     int bin = hash_table_hash(hash_table, key);
 
@@ -104,5 +114,21 @@ char* hash_table_get(hash_table_t* hash_table, char* key){
     if (!pair || !pair->key || strcmp(key, pair->key) != 0)
         return NULL;
 
-    return pair->value;
+    return &pair->value;
+}
+
+symbol* symbol_create(char *id, int symb_cat, int cat, int type, int size, int num_param, int position, int value, int num_local_var){
+    symbol *new;
+
+    strcpy(new->id, id);
+    new->symb_cat = symb_cat;
+    new->cat = cat;
+    new->type = type;
+    new->size = size;
+    new->num_param = num_param;
+    new->position = position;
+    new->value = value;
+    new->num_local_var = num_local_var;
+
+    return new;
 }
