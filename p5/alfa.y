@@ -28,13 +28,9 @@ int num_params = 0;
 int local_var_num = 1;
 int func_ret = 0;
 int func_flag_dec = 0;
-
-int vector_size = 0;
-int active_func = 0;
-int func_body = 0;
-int label = -1;
-int main_declaration = 0;
-int param_list = 0
+int num_params_call = 0;
+int func_call = 0;
+int label = 0;
 
 
 
@@ -288,7 +284,7 @@ resto_parametros_funcion:
     };
 
 parametro_funcion:
-    tipo identificador {
+    tipo identificador_parametro_funcion {
         fprintf(yyout, ";R27:\t<parametro_funcion> ::= <tipo> <identificador>\n");
         num_params++;
         pos_params++;
@@ -405,85 +401,378 @@ asignacion:
     };
 
 elemento_vector:
-    identificador TOK_CORCHETEIZQUIERDO exp TOK_CORCHETEDERECHO {
+    TOK_IDENTIFICADOR TOK_CORCHETEIZQUIERDO exp TOK_CORCHETEDERECHO {
         fprintf(yyout, ";R48:\t<elemento_vector> ::= <identificador> [ <exp> ]\n");
+
+        if($3.type != INTEGER){
+            printf("****Error semantico en lin %ld: El indice en una operacion de indexacion tiene que ser de tipo entero.\n", n_lines);
+            return -1;
+        }
+
+        aux_symb = search_table(&symbol_table, $1.lexeme);
+        
+        if(!aux_symb){
+            printf("****Error semantico en lin %ld: Acceso a variable no declarada (%s).\n", n_lines, $1.lexeme);
+            return -1;
+        }
+
+        if(aux_symb->symb_cat == FUNCTION || aux_symb->cat != VECTOR){
+            printf("****Error semántico en lin %d: Intento de indexacion de una variable que no es de tipo vector.\n",n_lines);
+            return -1;
+        }
+
+        if($3.is_address == 0){
+            $$.index_is_address = 0;
+            $$.value = $3.value;
+        }
+        else if($3.is_address == 1){
+            $$.index_is_address = 1;
+            strcpy($$.index, $3.lexeme);
+        }
+
+        $$.type = aux_symb->type;
+        $$.is_address = 1;
+        strcpy($$.lexeme, $1.lexeme);
+
     };
 
 condicional:
-    TOK_IF TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA {
+    if_exp_sentencias TOK_LLAVEDERECHA {
         fprintf(yyout, ";R50:\t<condicional> ::= if ( <exp> ) { <sentencias> }\n");
+        ifthenelse_fin(yyout, $1.label);
     } |
-    TOK_IF TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA TOK_ELSE TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA{
+    if_exp_sentencias TOK_LLAVEDERECHA TOK_ELSE TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA{
         fprintf(yyout, ";R51:\t<condicional> ::= if ( <exp> ) { <sentencias> } else { <sentencias> }\n");
+        ifthenelse_fin(yyout, $1.label);
+    };
+
+if_exp: 
+    TOK_IF TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA {
+
+        if($3.type != BOOL){
+            printf("****Error semantico en linea %d: Condicional con condicion de tipo int.\n", n_lines);
+            return -1;
+        }
+
+        $$.label = etiqueta++;
+        ifthen_inicio(yyout, $3.is_address, $$.label);
+    };
+
+if_exp_sentencias: 
+    if_exp sentencias {
+        $$.label = $1.label;
+        ifthenelse_fin_then(yyout, $$.label);
     };
 
 bucle:
-    TOK_WHILE TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA{
+    while_exp sentencias TOK_LLAVEDERECHA{
         fprintf(yyout, ";R52:\t<bucle> ::= while ( <exp> ) { <sentencias> }\n");
+        while_fin(yyout, $1.label);
+    };
+
+while: 
+    TOK_WHILE TOK_PARENTESISIZQUIERDO {
+        $$.label = label++;
+        while_inicio(yyout, $$.label);
+    };
+
+while_exp: 
+    while exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA{
+        if($2.type != BOOL){
+            printf("****Error semantico en linea %d: Condicional con condicion de tipo int.\n", n_lines);
+            return -1;
+        }
+
+        $$.label = $1.label;
+        while_exp_pila(yyout, $2.is_address, $$label);
     };
 
 lectura:
-    TOK_SCANF identificador {
+    TOK_SCANF TOK_IDENTIFICADOR {
         fprintf(yyout, ";R54:\t<lectura> ::= scanf <identificador>\n");
+        aux_symb = search_table(&symbol_table, $2.lexeme);
+        if(!aux_symb){
+            printf("****Error semantico en lin %d: Acceso a variable no declarada (%s).\n", n_lines, $2.lexeme);
+            return -1;
+        }
+
+        if(aux_symb->symb_cat == FUNCTION || aux_symb->cat != SCALAR){
+            printf("****Error semántico en lin %d: Asignacion incompatible.\n", n_lines);
+            return -1;
+        }
+
+        leer(yyout, $2.lexeme, aux_symb->type);
     };
 
 escritura:
     TOK_PRINTF exp {
         fprintf(yyout, ";R56:\t<escritura> ::= printf <exp>\n");
+        escritura(yyout, $2.is_address, $2.type);
     };
 
 retorno_funcion:
     TOK_RETURN exp {
         fprintf(yyout, ";R61:\t<retorno_funcion> ::= return <exp>\n");
+
+        if(func_flag_dec == 0){
+            printf("****Error semantico en lin %d: Sentencia de retorno fuera del cuerpo de una funcion.\n", n_lines);
+		    return -1;
+        }
+        func_ret = 1;
+        retornarFuncion(yyout, $2.is_address);
+
     };
 
 exp:
     exp TOK_MAS exp {
         fprintf(yyout, ";R72:\t<exp> ::= <exp> + <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Operacion aritmetica con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            sumar(yyout,$1.is_address, $3.is_address);
+
+            $$.tipo =INT;
+            $$.is_address = 0;
+            $$.value = $1.value + $3.value;
+        }
+
     } | 
     exp TOK_MENOS exp {
         fprintf(yyout, ";R73:\t<exp> ::= <exp> - <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Operacion aritmetica con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            restar(yyout,$1.is_address, $3.is_address);
+
+            $$.tipo =INT;
+            $$.is_address = 0;
+            $$.value = $1.value - $3.value;
+        }
+
     } | 
     exp TOK_DIVISION exp {
         fprintf(yyout, ";R74:\t<exp> ::= <exp> / <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Operacion aritmetica con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            dividir(yyout,$1.is_address, $3.is_address);
+
+            $$.tipo =INT;
+            $$.is_address = 0;
+            if($3.value == 0){
+                printf("****Error de ejecucion: Division por 0\n");
+                return -1;
+            }
+            $$.value = $1.value / $3.value;
+        }
+
     } | 
     exp TOK_ASTERISCO exp {
         fprintf(yyout, ";R75:\t<exp> ::= <exp> * <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Operacion aritmetica con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            multiplicar(yyout,$1.is_address, $3.is_address);
+
+            $$.tipo =INT;
+            $$.is_address = 0;
+            $$.value = $1.value * $3.value;
+        }
+
     } | 
     TOK_MENOS exp {
         fprintf(yyout, ";R76:\t<exp> ::= - <exp>\n");
+
+        if($2.type == BOOL){
+            printf("****Error semantico en lin %d: Operacion aritmetica con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($2.type == INT){
+            cambiar_signo(yyout,$2.is_address);
+
+            $$.tipo =INT;
+            $$.is_address = 0;
+            $$.value = -$2.value;
+        }
+
     } | 
     exp TOK_AND exp {
         fprintf(yyout, ";R77:\t<exp> ::= <exp> && <exp>\n");
+
+        if($1.type == INT || $3.type == INT){
+            printf("****Error semantico en lin %d: Operacion logica con operandos int.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == BOOL && $3.type == BOOL){
+            y(yyout,$1.is_address, $3.is_address);
+
+            $$.tipo =BOOL;
+            $$.is_address = 0;
+            $$.value = $1.value && $3.value;
+        }
+
     } | 
     exp TOK_OR exp {
         fprintf(yyout, ";R78:\t<exp> ::= <exp> || <exp>\n");
+
+        if($1.type == INT || $3.type == INT){
+            printf("****Error semantico en lin %d: Operacion logica con operandos int.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == BOOL && $3.type == BOOL){
+            o(yyout,$1.is_address, $3.is_address);
+
+            $$.tipo =BOOL;
+            $$.is_address = 0;
+            $$.value = $1.value || $3.value;
+        }
+
     } | 
     TOK_NOT exp {
         fprintf(yyout, ";R79:\t<exp> ::= ! <exp>\n");
+
+        if($2.type == INT){
+            printf("****Error semantico en lin %d: Operacion logica con operandos int.\n", n_lines);
+            return -1;
+        }
+
+        if($2.type == BOOL){
+            no(yyout,$2.is_address);
+
+            $$.tipo =BOOL;
+            $$.is_address = 0;
+            $$.value = !$2.value;
+        }
+
+
     } |
-    identificador {
+    TOK_IDENTIFICADOR {
         fprintf(yyout, ";R80:\t<exp> ::= <identificador>\n");
+
+        aux_symb = search_table(&symbol_table, $1.lexeme);
+
+        if(!aux){
+            printf("****Error semantico en linea %d: Acceso a variable no delcarada %s\n", n_lines, $1.lexeme);
+            return -1;
+        }
+
+        if(aux_symb->cat == VECTOR || aux_symb->symb_cat == FUNCTION){
+            printf("****Error semantico en linea %d: Asignacion incompatible\n", n_lines);
+            return -1;
+        }
+
+        $$.type = aux_symb->type;
+        $$.is_address = 1;
+
+        if(func_flag_dec != 1) escribir_operando(yyout, $1.lexeme, 1);
+        else
+        {
+            if(aux_symb->symb_cat == PARAMETER) escribirParametro(yyout, aux_symb->position, num_params);
+            else escribirVariableLocal(yyout, aux_symb->position);
+        }
+
+        if(func_call == 1){
+            operandoEnPilaAArgumento(yyout, 1);
+            $$.is_address = 0;
+        }
+
     } |
     constante {
         fprintf(yyout, ";R81:\t<exp> ::= <constante>\n");
+
+        $$.type = $1.type;
+        $$.is_address = $1.is_address;
+        if(func_call == 1) operandoEnPilaAArgumento(yyout, 0);
+
     } |
     TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO {
         fprintf(yyout, ";R82:\t<exp> ::= ( <exp> )\n");
+        $$.type = $2.type;
+        $$.is_address = $2.is_address;
     } | 
     TOK_PARENTESISIZQUIERDO comparacion TOK_PARENTESISDERECHO {
         fprintf(yyout, ";R83:\t<exp> ::= ( <comparacion> )\n");
+        $$.type = $2.type;
+        $$.is_address = $2.is_address;
     } | 
     elemento_vector {
         fprintf(yyout, ";R85:\t<exp> ::= <elemento_vector>\n");
+
+        $$.type = $1.type;
+        $$.is_address = 1;
+        $$.value = $1.value;
+        strcpy($$.lexeme, $1.lexeme);
+
+        aux_symb = search_table(&symbol_table, $1.lexeme);
+
+        if(!aux_symb || aux_symb->cat != VECTOR || aux_symb->symb_cat == FUNCTION){
+            printf("****Error semantico en linea %d: Asignacion incompatible\n", n_lines);
+            return -1;
+        }
+
+        escribir_elemento_vector(yyout, $1.lexeme, aux_symb->size, $1.index_is_address);
+
+        if(func_call == 1){
+            operandoEnPilaAArgumento(yyout, 1);
+            $$.is_address = 0;
+        }
+
     } | 
-    identificador TOK_PARENTESISIZQUIERDO lista_expresiones TOK_PARENTESISDERECHO {
+    TOK_IDENTIFICADOR TOK_PARENTESISIZQUIERDO lista_expresiones TOK_PARENTESISDERECHO {
         fprintf(yyout, ";R88:\t<exp> ::= <identificador> ( <lista_expresiones> )\n");
+
+        if(func_call == 1){
+            printf("****Error semantico en lin %d: No esta permitido el uso de llamadas a funciones como parametros de otras funciones.\n", n_lines);
+            return -1;
+        }
+
+        func_call = 1;
+
+        aux_symb = search_table(&symbol_table, $1.lexeme):
+        if(!aux_symb){
+            printf("****Error semantico en lin %d. Asignacion incompatible.\n", n_lines);
+		    return -1;
+        }
+//////QUITAR COMILLAS
+        "
+//////QUITAR COMILLAS
+        if(num_params_call != aux_symb->num_param){
+            printf("****Error semantico en lin %d: Numero incorrecto de parametros en llamada a funcion.\n", n_lines);
+            return -1;
+        }
+
+        llamarFuncion(yyout, $1.lexeme, num_params_call);
+        limpiarPila(yyout, num_params_call);
+        num_params_call = 0;
+        func_call = 0;
+        $$.is_address = 0;
+        $$.type = aux_symb->type;
+
     };
 
 lista_expresiones:
     exp resto_lista_expresiones {
         fprintf(yyout, ";R89:\t<lista_expresiones> ::= <exp> <resto_lista_expresiones>\n");
+        num_params_call++;
     } | 
     %empty {
         fprintf(yyout, ";R90:\t<lista_expresiones> ::=\n");
@@ -492,6 +781,7 @@ lista_expresiones:
 resto_lista_expresiones:
     TOK_COMA exp resto_lista_expresiones {
         fprintf(yyout, ";R91:\t<resto_lista_expresiones> ::= , <exp> <resto_lista_expresiones>\n");
+        num_params_call++;
     } | 
     %empty {
         fprintf(yyout, ";R92:\t<resto_lista_expresiones> ::=\n");
@@ -500,56 +790,196 @@ resto_lista_expresiones:
 comparacion:
     exp TOK_IGUAL exp {
         fprintf(yyout, ";R93:\t<comparacion> ::= <exp> == <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Comparacion con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            igual(yyout,$1.is_address, $3.is_address, label);
+
+            label++;
+            $$.tipo = BOOL;
+            $$.is_address = 0;
+            $$.value = $1.value == $3.value;
+        }
     } | 
     exp TOK_DISTINTO exp {
         fprintf(yyout, ";R94:\t<comparacion> ::= <exp> != <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Comparacion con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            distinto(yyout,$1.is_address, $3.is_address, label);
+
+            label++;
+            $$.tipo = BOOL;
+            $$.is_address = 0;
+            $$.value = $1.value != $3.value;
+        }
+
     } | 
     exp TOK_MENORIGUAL exp {
         fprintf(yyout, ";R95:\t<comparacion> ::= <exp> <= <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Comparacion con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            menor_igual(yyout,$1.is_address, $3.is_address, label);
+
+            label++;
+            $$.tipo = BOOL;
+            $$.is_address = 0;
+            $$.value = $1.value <= $3.value;
+        }
+
     } | 
     exp TOK_MAYORIGUAL exp {
         fprintf(yyout, ";R96:\t<comparacion> ::= <exp> >= <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Comparacion con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            mayor_igual(yyout,$1.is_address, $3.is_address, label);
+
+            label++;
+            $$.tipo = BOOL;
+            $$.is_address = 0;
+            $$.value = $1.value >= $3.value;
+        }
+
     } |
     exp TOK_MENOR exp {
         fprintf(yyout, ";R97:\t<comparacion> ::= <exp> < <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Comparacion con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            menor(yyout,$1.is_address, $3.is_address, label);
+
+            label++;
+            $$.tipo = BOOL;
+            $$.is_address = 0;
+            $$.value = $1.value < $3.value;
+        }
+
     } | 
     exp TOK_MAYOR exp {
         fprintf(yyout, ";R98:\t<comparacion> ::= <exp> > <exp>\n");
+
+        if($1.type == BOOL || $3.type == BOOL){
+            printf("****Error semantico en lin %d: Comparacion con operandos boolean.\n", n_lines);
+            return -1;
+        }
+
+        if($1.type == INT && $3.type == INT){
+            mayor(yyout,$1.is_address, $3.is_address, label);
+
+            label++;
+            $$.tipo = BOOL;
+            $$.is_address = 0;
+            $$.value = $1.value > $3.value;
+        }
+
     };
 
 constante:
     constante_entera {
         fprintf(yyout, ";R100:\t<constante> ::= <constante_entera>\n");
+        $$.type = $1.type;
+        $$.is_address = $1.is_address;
     } | 
     constante_logica {
         fprintf(yyout, ";R101:\t<constante> ::= <constante_logica>\n");
+        $$.type = $1.type;
+        $$.is_address = $1.is_address;
     };
 
 constante_logica:
     TOK_TRUE {
         fprintf(yyout, ";R102:\t<constante_logica> ::= true\n");
+
+        $$.type = BOOL;
+        $$.is_address = 0;
+        escribir_operando(yyout, "1", 0);
     } | 
     TOK_FALSE {
         fprintf(yyout, ";R103:\t<constante_logica> ::= false\n");
+
+        $$.type = BOOL;
+        $$.is_address = 0;
+        escribir_operando(yyout, "0", 0);
     };
 
 constante_entera:
     TOK_CONSTANTE_ENTERA {
         fprintf(yyout, ";R104:\t<constante_entera> ::= TOK_CONSTANTE_ENTERA\n");
+
+        $$.type = INT;
+        $$.is_address = 0;
+        $$.value = $1.value;
+        escribir_operando(yyout, $$.value, 0);
     };
 
 identificador:
     TOK_IDENTIFICADOR {
         fprintf(yyout, ";R108:\t<identificador> ::= TOK_IDENTIFICADOR\n");
+        if(search_table(&symbol_table, $1.lexeme)){
+            printf( "****Error semantico en linea %d: Declaracion duplicada.", n_lines);
+            return -1;
+        }
+        if(func_flag_dec == 1){
+            if(curr_class != SCALAR){
+                printf("****Error semantico en lin %d: Variable local de tipo no escalar.\n", n_lines);
+                return -1;
+            }
+
+            aux_symb = symbol_create($1.lexeme, VARIABLE, curr_type, SCALAR, -1, 1, -1, local_var_num, -1);
+            insertarTabla(&symbol_table, $1.lexeme, aux_symb);
+            local_var_num++;
+        }
+        else
+        {
+            aux_symb = symbol_create($1.lexeme, VARIABLE, curr_type, curr_class, -1, curr_len, -1, -1, -1);
+            insertarTabla(&symbol_table, $1.lexeme, aux_symb);
+            declarar_variable(yyout, $1.lexeme, curr_type, curr_len);
+        }
+    };
+
+identificador_parametro_funcion: 
+    TOK_IDENTIFICADOR {
+        fprintf(yyout, ";R108:\t<identificador> ::= TOK_IDENTIFICADOR\n");
+
+        if(search_table(&symbol_table, $1.lexeme)){
+            printf( "****Error semantico en linea %d: Declaracion duplicada.", n_lines);
+            return -1;
+        }
+
+        aux_symb = symbol_create($1.lexeme, PARAMETER, curr_type, SCALAR, -1, 1, -1, pos_params, -1);
+
+        insertarTabla(&symbol_table, $1.lexeme, aux_symb);
     };
 
 %%
 
 void yyerror(const char *error){
     extern int yyleng;
-    extern int is_morpho;
-    extern size_t n_cols;
-    extern size_t n_lines;
+    // extern int is_morpho;
+    // extern size_t n_cols;
+    // extern size_t n_lines;
     if(!is_morpho){
         printf("****Error sintactico en [lin %lu, col %lu]\n", n_lines, n_cols-yyleng);
     }

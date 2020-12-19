@@ -24,14 +24,15 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 - [x] Editar tabla_simbolos.c
 - [ ] Symbol delete
 - [ ] Quitar fprintf extra
-- [ ] Editar alfa.y
+- [ ] Mirar buff
+- [x] Editar alfa.y
 - [x] Ficheros errores
 - [x] Ficheros prueba
 - [ ] Makefile
 - [x] Corregir morfo
-- [ ] Corregir tabla símbolos
+- [x] Corregir tabla símbolos
 - [x] Corregir bison
-- [ ] Dividir entre 0
+- [x] Dividir entre 0
 
 ### Enlaces útiles
 
