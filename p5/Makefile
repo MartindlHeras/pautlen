@@ -36,7 +36,7 @@ y.tab.h: alfa.y
 
 .PHONY: clean
 clean:
-	rm -rf lex.yy.* y.* alfa
+	rm -rf lex.yy.* y.* alfa prueba/misalida.output
 
 # MINI = mini mini2 mini3 mini4 mini5 mini6 mini7 mini8 mini9 factorial condicionales vectores fibonacci funciones_vectores funciones
 # ERR = err1 err2 err3 err4 err5 err6 err7 err8 err9 err10 err11 err12 err13 err14 err15 err16

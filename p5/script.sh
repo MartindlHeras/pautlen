@@ -1,38 +1,69 @@
-./pruebaSinta correccion/aritmeticas1.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/aritmeticas1.out
+./alfa prueba/aritmeticas1.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/aritmeticas1_1.output
 
-./pruebaSinta correccion/aritmeticas2.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/aritmeticas2.out
+./alfa prueba/aritmeticas2.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/aritmeticas2_1.output
 
-./pruebaSinta correccion/bucles.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/bucles.out
+./alfa prueba/comparaciones.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/comparaciones.output
 
-./pruebaSinta correccion/error_morfo_sin.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/error_morfo_sin.out
+./alfa prueba/error_ej1.alf prueba/misalida.output
+./alfa prueba/error_ej2.alf prueba/misalida.output
 
-./pruebaSinta correccion/error_sin_1.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/error_sin_1.out
+./alfa prueba/error_se1.alf prueba/misalida.output
+./alfa prueba/error_se2.alf prueba/misalida.output
+./alfa prueba/error_se3.alf prueba/misalida.output
+./alfa prueba/error_se4.alf prueba/misalida.output
+./alfa prueba/error_se5.alf prueba/misalida.output
+./alfa prueba/error_se6.alf prueba/misalida.output
+./alfa prueba/error_se7.alf prueba/misalida.output
+./alfa prueba/error_se8.alf prueba/misalida.output
+./alfa prueba/error_se9.alf prueba/misalida.output
+./alfa prueba/error_se10.alf prueba/misalida.output
+./alfa prueba/error_se11.alf prueba/misalida.output
+./alfa prueba/error_se12.alf prueba/misalida.output
+./alfa prueba/error_se13.alf prueba/misalida.output
+./alfa prueba/error_se14.alf prueba/misalida.output
+./alfa prueba/error_se15.alf prueba/misalida.output
 
-./pruebaSinta correccion/error_sin_2.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/error_sin_2.out
+./alfa prueba/funciones1.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/funciones1.output
 
-./pruebaSinta correccion/especifico1.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/especifico1.out
+./alfa prueba/funciones2.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/funciones2_1.output
 
-./pruebaSinta correccion/especifico2.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/especifico2.out
+./alfa prueba/funciones3.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/funciones3.output
 
-./pruebaSinta correccion/especifico3.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/especifico3.out
+./alfa prueba/funciones4.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/funciones4.output
 
-./pruebaSinta correccion/funciones1.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/funciones1.out
+./alfa prueba/if1.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/if1.output
 
-./pruebaSinta correccion/funciones2.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/funciones2.out
+./alfa prueba/if2.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/if2.output
 
-./pruebaSinta correccion/ifs.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/ifs.out
+./alfa prueba/if3.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/if3_1.output
 
-./pruebaSinta correccion/logicas.in correccion/misalida.txt
-diff -bB correccion/misalida.txt correccion/logicas.out
+./alfa prueba/logicas1.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/logicas1_1.output
+
+./alfa prueba/logicas2.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/logicas2_1.output
+
+./alfa prueba/vectores1.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/vectores1.output
+
+./alfa prueba/vectores2.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/vectores2.output
+
+./alfa prueba/vectores3.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/vectores3.output
+
+./alfa prueba/vectores4.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/vectores4.output
+
+./alfa prueba/while.alf prueba/misalida.output
+diff -bB prueba/misalida.output prueba/while_1.output
