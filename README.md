@@ -18,13 +18,17 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 
 ### Cosas para hacer
 
+- [ ] Editar hash.h
+- [ ] Editar hash.c
+- [ ] Editar tabla_simbolos.h
+- [ ] Editar tabla_simbolos.c
 - [ ] Editar alfa.y
-- [ ] Ficheros errores
-- [ ] Ficheros prueba
+- [x] Ficheros errores
+- [x] Ficheros prueba
 - [ ] Makefile
-- [ ] Corregir morfo
+- [x] Corregir morfo
 - [ ] Corregir tabla símbolos
-- [ ] Corregir bison
+- [x] Corregir bison
 - [ ] Dividir entre 0
 
 ### Enlaces útiles

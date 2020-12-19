@@ -1,15 +1,39 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "alfa.h"
+
 extern FILE* yyout;
 extern int yylex(void);
 void yyerror(const char * s);
+
+extern int is_morpho;
+extern size_t n_lines;
+extern size_t n_cols;
+
+int curr_type;
+int curr_class;
+int local_var_pos;
+int local_var_num;
+int pos_params;
+int num_params;
+
+int vector_size = 0;
+int active_func = 0;
+int func_ret = 0;
+int func_body = 0;
+int label = -1;
+int main_declaration = 0;
+int param_list = 0
+
+
 
 %}
 
 %union
 {
-    int number;
-    char* string;
+    attribute_type attributes;
 }
 
 %token TOK_MAIN
@@ -49,14 +73,34 @@ void yyerror(const char * s);
 %token TOK_MENOR
 %token TOK_MAYOR
 
-
-/* Identificadores  */
-%token <string> TOK_IDENTIFICADOR
-
-/* Constantes */
-%token <number> TOK_CONSTANTE_ENTERA
 %token TOK_TRUE
 %token TOK_FALSE
+
+
+%token <attributes> TOK_CONSTANTE_ENTERA
+%token <attributes> TOK_IDENTIFICADOR
+
+%type <attributes> clase_vector
+%type <attributes> funcion
+%type <attributes> declaraciones_funcion
+%type <attributes> nombre_funcion
+%type <attributes> elemento_vector
+%type <attributes> condicional
+%type <attributes> if_exp
+%type <attributes> if_exp_sentencias
+%type <attributes> bucle
+%type <attributes> while
+%type <attributes> while_exp
+%type <attributes> exp
+%type <attributes> exp_funcion
+%type <attributes> lista_expresiones
+%type <attributes> resto_lista_expresiones
+%type <attributes> comparacion
+%type <attributes> constante
+%type <attributes> constante_entera
+%type <attributes> constante_logica
+%type <attributes> identificador
+
 
 
 %left TOK_IGUAL TOK_DISTINTO TOK_MENORIGUAL TOK_MAYORIGUAL TOK_MENOR TOK_MAYOR

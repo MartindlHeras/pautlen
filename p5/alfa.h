@@ -15,11 +15,6 @@
 #define MAX_VECTOR_SIZE 64
 #define MAX_ID_LONGITUDE 100
 
-/*
-* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-* REVISASR NOMBRES DE VARIABLES POR SI NO SON LOS MEJORES
-* ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡
-*/
 
 typedef struct _attribute_type{
     int type;

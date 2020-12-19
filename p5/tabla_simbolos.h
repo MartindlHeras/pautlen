@@ -7,4 +7,15 @@
 
 #include "hash.h"
 #define SIZE 32
-void interact_table(char *buff, FILE *out, hash_table_t *hash_global);
+
+typedef struct _symbol_table {
+    int local_flag;
+    hash_table_t *local_hash;
+    hash_table_t *global_hash;
+} symbol_table;
+
+int insert_table(symbol_table *hashes, char *key, symbol *value);
+
+int close_scope(symbol_table *hashes);
+
+symbol *search_table(symbol_table *hashes, char *key);

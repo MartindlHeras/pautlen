@@ -7,81 +7,70 @@
 
 #include "tabla_simbolos.h"
 
-int flag = 0;
-hash_table_t *hash_local;
+int insert_table(symbol_table *hashes, char *key, symbol *value){
 
-
-void interact_table(char *buff, FILE *out, hash_table_t *hash_global){
-
-  char *token1, *token2, *result;
-  int result_number;
-
-  token1 = strtok(buff, "\t\n");
-  token2 = strtok(NULL, "\t\n");
+  if(!hashes) return -1;
+  if(!key) return -1;
+  if (!value) return -1;
   
-  if(flag == 1){
-    if(!token2){
-      result = hash_table_get(hash_local, token1);
-      if(!result){
-        result = hash_table_get(hash_global, token1);
-        if(!result){
-          fprintf(out, "%s -1\n", token1);
-        }
-        else{
-          fprintf(out, "%s %s\n", token1, result);
-        }
-      }
-      else{
-        fprintf(out, "%s %s\n", token1, result);
-      }
-    }
-    else{
-      if(strcmp(token1, "cierre")==0 && strcmp(token2, "-999")==0){
-        flag = 0;
-        free(hash_local);
-        fprintf(out, "cierre\n");
-      }
-      else{
-        result_number = hash_table_set(hash_local, token1, token2);
-        if(result_number== -1){
-          fprintf(out, "-1 %s\n", token1);
-        }
-        else{
-            fprintf(out, "%s\n", token1);
-        }
-      }
-    }
+
+  int res_value;
+
+  if (hashes->local_flag == 1)
+  {
+    res_value = hash_table_set(hashes->local_hash, key, value);
+
+    return res_value;
   }
-  else{
-    if(token2 == NULL) {
-      result = hash_table_get(hash_global, token1);
+  else
+  {
+    res_value = hash_table_set(hashes->global_hash, key, value);
 
-      if(result == NULL){
-        fprintf(out, "%s -1\n", token1);
-      }
-      else{
-        fprintf(out, "%s %s\n", token1, result);
+    if(res_value == -1) return -1;
 
-      }
+    if (value->symb_cat == FUNCTION)
+    {
+      if (hashes->local_flag != 0) return -1;
+
+      hashes->local_flag = 1;
+      hashes->local_hash = hash_table_create(65536);
+
+      res_value = hash_table_set(hashes->local_hash, key, value);
     }
-    else{
-      if(atoi(token2) > 0){
-        result_number = hash_table_set(hash_global, token1, token2);
-
-        if(result_number == -1){
-          fprintf(out, "-1 %s\n", token1);
-        }
-        else{
-          fprintf(out, "%s\n", token1);
-        }
-      }
-      else{
-        result_number = hash_table_set(hash_global, token1, token2);
-        flag = 1;
-        hash_local = hash_table_create(65536);
-        hash_table_set(hash_local, token1, token2);
-        fprintf(out, "%s\n", token1);
-      }
-    }
+    return res_value;
   }
+}
+
+int close_scope(symbol_table *hashes){
+
+  if(!hashes) return -1;
+
+  if(hashes->local_flag == 0){
+    return -1;
+  } 
+  else
+  {
+    hashes->local_flag = 0;
+    free(hashes->local_hash);
+    return 0;
+  }
+}
+
+symbol *search_table(symbol_table *hashes, char *key){
+
+  if(!hashes) return -1;
+  if(!key) return -1;
+
+  symbol *res_value;
+
+  if (hashes->local_flag == 1)
+  {
+    res_value = hash_table_get(hashes->local_hash, key);
+
+    if(res_value) return res_value;
+  }
+
+  res_value = hash_table_get(hashes->global_hash, key);
+  return res_value;
+  
 }
