@@ -4,6 +4,8 @@
 #include <string.h>
 #include "alfa.h"
 
+#define MAX 64
+
 extern FILE* yyout;
 extern int yylex(void);
 void yyerror(const char * s);
@@ -12,16 +14,23 @@ extern int is_morpho;
 extern size_t n_lines;
 extern size_t n_cols;
 
+extern symbol_table symbol_table;
+symbol *aux_symb;
+
 int curr_type;
 int curr_class;
+int curr_len;
+
 int local_var_pos;
-int local_var_num;
 int pos_params;
-int num_params;
+
+int num_params = 0;
+int local_var_num = 1;
+int func_ret = 0;
+int func_flag_dec = 0;
 
 int vector_size = 0;
 int active_func = 0;
-int func_ret = 0;
 int func_body = 0;
 int label = -1;
 int main_declaration = 0;
@@ -81,27 +90,21 @@ int param_list = 0
 %token <attributes> TOK_IDENTIFICADOR
 
 %type <attributes> clase_vector
-%type <attributes> funcion
 %type <attributes> declaraciones_funcion
 %type <attributes> nombre_funcion
 %type <attributes> elemento_vector
-%type <attributes> condicional
 %type <attributes> if_exp
 %type <attributes> if_exp_sentencias
-%type <attributes> bucle
 %type <attributes> while
 %type <attributes> while_exp
 %type <attributes> exp
-%type <attributes> exp_funcion
-%type <attributes> lista_expresiones
-%type <attributes> resto_lista_expresiones
 %type <attributes> comparacion
 %type <attributes> constante
 %type <attributes> constante_entera
 %type <attributes> constante_logica
 %type <attributes> identificador
 
-
+%start programa
 
 %left TOK_IGUAL TOK_DISTINTO TOK_MENORIGUAL TOK_MAYORIGUAL TOK_MENOR TOK_MAYOR
 %left TOK_AND 
@@ -113,8 +116,27 @@ int param_list = 0
 %%
 
 programa:
-    TOK_MAIN TOK_LLAVEIZQUIERDA declaraciones funciones sentencias TOK_LLAVEDERECHA {
+    escritura_cabecera TOK_MAIN TOK_LLAVEIZQUIERDA declaraciones escritura_codigo funciones escritura_main sentencias TOK_LLAVEDERECHA {
         fprintf(yyout, ";R1:\t<programa> ::= main { <declaraciones> <funciones> <sentencias> }\n");
+        fprintf(yyout, ";escribir_fin\n");
+        escribir_fin(yyout);
+    };
+
+escritura_cabecera: {
+        fprintf(yyout, ";escribir_subseccion_data\n");
+        escribir_subseccion_data(yyout);
+        fprintf(yyout, ";escribir_cabecera_bss\n");
+        escribir_cabecera_bss(yyout);
+    };
+
+escritura_codigo: {
+        fprintf(yyout, ";escribir_segmento_codigo\n");
+        escribir_segmento_codigo(yyout);
+    };
+
+escritura_main: {
+        fprintf(yyout, ";escribir_inicio_main\n");
+        escribir_inicio_main(yyout);
     };
 
 declaraciones:
@@ -133,9 +155,11 @@ declaracion:
 clase:
     clase_escalar {
         fprintf(yyout, ";R5:\t<clase> ::= <clase_escalar>\n");
+        curr_class = SCALAR;
     } | 
     clase_vector {
         fprintf(yyout, ";R7:\t<clase> ::= <clase_vector>\n");
+        curr_class = VECTOR;
     };
 
 clase_escalar:
@@ -146,14 +170,24 @@ clase_escalar:
 tipo:
     TOK_INT { 
         fprintf(yyout, ";R10:\t<tipo> ::= int\n");
+        curr_type = INT;
+        curr_len = 1;
     } | 
     TOK_BOOLEAN { 
         fprintf(yyout, ";R11:\t<tipo> ::= boolean\n"); 
+        curr_type = BOOL;
+        curr_len = 1;
     };
 
 clase_vector:
     TOK_ARRAY tipo TOK_CORCHETEIZQUIERDO constante_entera TOK_CORCHETEDERECHO {
         fprintf(yyout, ";R15:\t<clase_vector> ::= array <tipo> [ <constante_entera> ]\n");
+        if($4.int_value > MAX || $4.int_value <= 0){
+            printf("****Error semantico en lin %lu: El tamanyo del vector <nombre_vector> excede los limites permitidos (1,64).\n", n_lines);
+            return -1;
+        }
+        $$.int_value = $4.int_value;
+        curr_len = $4.int_value;
     };
 
 identificadores:
@@ -173,8 +207,68 @@ funciones:
     };
 
 funcion:
-    TOK_FUNCTION tipo identificador TOK_PARENTESISIZQUIERDO parametros_funcion TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA declaraciones_funcion sentencias TOK_LLAVEDERECHA{
+    funcion_declaracion sentencias TOK_LLAVEDERECHA{
         fprintf(yyout, ";R22:\t<funcion> ::= function <tipo> <identificador> ( <parametros_funcion> ) { <declaraciones_funcion> <sentencias> }\n");
+        if(func_ret==0){
+            printf("****Error semantico en lin %d: Funcion <nombre_funcion> sin sentencia de retorno\n", n_lines);
+			return -1;
+        }
+        if(close_scope(&symbol_table) == -1) return -1;
+
+        aux_symb = search_table(&symbol_table, $1.lexeme);
+        if(!aux_symb) return -1;
+
+        aux_symb = symbol_create($1.lexeme, FUNCTION, aux_symb->type, -1, -1, -1, num_params, -1, local_var_num);
+
+        insert_table(&symbol_table, $1.lexeme, aux_symb);
+
+        if(close_scope(&symbol_table) == -1) return -1;
+
+        func_flag_dec = 0;
+
+    };
+
+funcion_declaracion: funcion_nombre TOK_PARENTESISIZQUIERDO parametros_funcion TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA declaraciones_funcion {
+        strcpy($$.lexeme, $1.lexeme);
+        $$.type = $1.type;
+
+        fprintf(yyout, ";declararFuncion\n");
+
+        declararFuncion(yyout, $1.lexeme, local_var_num);
+
+        aux_symb = search_table(&symbol_table, $1.lexeme);
+
+        if(!aux_symb) return -1;
+
+        aux_symb = symbol_create($1.lexeme, FUNCTION, aux_symb->type, -1, -1, -1, num_params, -1, local_var_num);
+
+        insert_table(&symbol_table, $1.lexeme, aux_symb);
+
+    };
+
+funcion_nombre: TOK_FUNCTION tipo TOK_IDENTIFICADOR {
+
+        aux_symb = search_table(&symbol_table, $3.lexeme);
+
+        if(!aux_symb){
+            printf("****Error semantico en lin %d: Declaracion duplicada.\n", n_lines);
+			return -1;
+        }
+
+        aux_symb = symbol_create($1.lexeme, FUNCTION, curr_type, -1, -1, -1, -1, -1, -1);
+
+        insert_table(&symbol_table, $3.lexeme, aux_symb);
+
+        num_params = 0;
+        pos_params = 0;
+        local_var_num = 1;
+        local_var_pos = 1;
+        func_flag_dec = 1;
+        func_ret = 0;
+
+        strcpy($$.lexeme, $3.lexeme);
+        $$.type = curr_type;
+    
     };
 
 parametros_funcion:
@@ -196,6 +290,8 @@ resto_parametros_funcion:
 parametro_funcion:
     tipo identificador {
         fprintf(yyout, ";R27:\t<parametro_funcion> ::= <tipo> <identificador>\n");
+        num_params++;
+        pos_params++;
     };
 
 declaraciones_funcion:
