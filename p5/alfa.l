@@ -12,6 +12,12 @@ int is_morpho;
 %option nounput
 
 %%
+
+"//".* {n_cols+= yyleng;}
+" "+ {n_cols+= yyleng;}
+"\t"+ {n_cols+= yyleng;}
+"\n" { n_cols=1; n_lines++;}
+
 main { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_MAIN;}
 int { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_INT;}
 boolean { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_BOOLEAN;}
@@ -60,12 +66,6 @@ false { n_cols+= yyleng; fprintf(yyout, ";D:\t%s\n", yytext); return TOK_FALSE;}
     }
 
 [a-zA-Z]([0-9]|[a-zA-Z]){100,} { printf("****Error en [lin %lu, col %lu]: id demasiado largo\n", n_lines, n_cols); is_morpho=1; return -2;}
-
-
-"\n" { n_cols=1; n_lines++;}
-"\t"+ {n_cols+= yyleng;}
-" "+ {n_cols+= yyleng;}
-"//".* {n_cols+= yyleng;}
 
 . {printf("****Error en [lin %lu, col %lu]: simbolo no permitido (%s)\n", n_lines, n_cols, yytext); n_cols++; is_morpho=1; return -1;}
 %%
