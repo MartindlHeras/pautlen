@@ -48,5 +48,5 @@ input_t* hash_table_pair(char* key, symbol* value);
 int hash_table_hash(hash_table_t* hash_table, char* key);
 int hash_table_set(hash_table_t* hash_table, char* key, symbol* value);
 symbol* hash_table_get(hash_table_t* hash_table, char* key);
-symbol* symbol_create(char *id, int symb_cat, int type, int cat, int size, int num_param, int position, int value, int num_local_var);
+symbol* symbol_create(char *id, int symb_cat, int type, int cat, int value, int size, int num_param, int position, int num_local_var);
 void symbol_delete(symbol *symbol);

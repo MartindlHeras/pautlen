@@ -117,7 +117,7 @@ symbol* hash_table_get(hash_table_t* hash_table, char* key){
     return &pair->value;
 }
 
-symbol* symbol_create(char *id, int symb_cat, int type, int cat, int size, int num_param, int position, int value, int num_local_var){
+symbol* symbol_create(char *id, int symb_cat, int type, int cat, int value, int size, int num_param, int position, int num_local_var){
     symbol *new;
     new = calloc(1,sizeof(symbol));
     strcpy(new->id, id);

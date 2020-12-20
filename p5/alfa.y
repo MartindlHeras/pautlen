@@ -230,8 +230,6 @@ funcion_declaracion:
         strcpy($$.lexeme, $1.lexeme);
         $$.type = $1.type;
 
-        declararFuncion(yyout, $1.lexeme, local_var_num);
-
         aux_symb = search_table(&aux_symbol_table, $1.lexeme);
 
         if(!aux_symb) return -1;
@@ -239,6 +237,8 @@ funcion_declaracion:
         aux_symb = symbol_create($1.lexeme, FUNCTION, aux_symb->type, -1, -1, -1, num_params, -1, local_var_num);
 
         insert_table(&aux_symbol_table, $1.lexeme, aux_symb);
+
+        declararFuncion(yyout, $1.lexeme, local_var_num);
 
         // symbol_delete(aux_symb);
     };
@@ -739,34 +739,38 @@ exp:
         }
 
     } |
-    TOK_IDENTIFICADOR TOK_PARENTESISIZQUIERDO lista_expresiones TOK_PARENTESISDERECHO {
+    TOK_IDENTIFICADOR funcion_flag TOK_PARENTESISIZQUIERDO lista_expresiones TOK_PARENTESISDERECHO {
         fprintf(yyout, ";R88:\t<exp> ::= <identificador> ( <lista_expresiones> )\n");
-
-        if(func_call == 1){
-            printf("****Error semantico en lin %d: No esta permitido el uso de llamadas a funciones como parametros de otras funciones.\n", n_lines);
-            return -1;
-        }
-
-        func_call = 1;
 
         aux_symb = search_table(&aux_symbol_table, $1.lexeme);
         if(!aux_symb){
             printf("****Error semantico en lin %d. Asignacion incompatible.\n", n_lines);
 		    return -1;
         }
-        if(num_params_call != aux_symb->num_param){);
+        if(num_params_call != aux_symb->num_param){
+            printf("num_params_call: %d y aux_symb->num_param: %d\n", num_params_call, aux_symb->num_param);
             printf("****Error semantico en lin %d: Numero incorrecto de parametros en llamada a funcion.\n", n_lines);
             return -1;
         }
 
         llamarFuncion(yyout, $1.lexeme, num_params_call);
-        limpiarPila(yyout, num_params_call);
         num_params_call = 0;
         func_call = 0;
         $$.is_address = 0;
         $$.type = aux_symb->type;
         // symbol_delete(aux_symb);
     };
+
+funcion_flag:
+    %empty {
+        if(func_call == 1){
+            printf("****Error semantico en lin %d: No esta permitido el uso de llamadas a funciones como parametros de otras funciones.\n", n_lines);
+            return -1;
+        }
+
+        func_call = 1;
+    };
+
 
 lista_expresiones:
     exp resto_lista_expresiones {

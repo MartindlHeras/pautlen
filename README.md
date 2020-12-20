@@ -22,18 +22,18 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 - [x] comparaciones
 - [x] error_ej
 - [x] error_se
-- [ ] funciones1
+- [x] funciones1
 - [ ] funciones2
-- [ ] funciones3
-- [ ] funciones4
+- [x] funciones3
+- [x] funciones4
 - [x] if1
 - [ ] if2
 - [ ] if3
 - [x] logicas1
 - [ ] logicas2
-- [ ] vectores1
+- [x] vectores1
 - [ ] vectores2
-- [ ] vectores3
+- [x] vectores3
 - [ ] vectores4
 - [x] while
 
