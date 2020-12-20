@@ -24,8 +24,7 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 - [x] error_se
 - [x] funciones
 - [x] ifs
-- [x] logicas1
-- [ ] logicas2 ???
+- [x] logicas
 - [x] vectores
 - [x] while
 

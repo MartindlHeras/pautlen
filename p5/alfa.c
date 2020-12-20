@@ -46,4 +46,4 @@ int main(int argc, char const *argv[])
     fclose(yyin);
     fclose(yyout);
     return 0;
-}   
+} 
