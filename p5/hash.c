@@ -50,7 +50,7 @@ input_t* hash_table_pair(char* key, symbol* value){
 
 int hash_table_hash(hash_table_t* hash_table, char* key){
     int i = 0;
-    unsigned long int hash_value;    
+    unsigned long int hash_value = 0;  
     
     while (i < strlen(key) && hash_value < ULONG_MAX){
         hash_value = hash_value << 8;
@@ -66,6 +66,8 @@ int hash_table_set(hash_table_t* hash_table, char* key, symbol* value){
     int bin  = hash_table_hash(hash_table, key);
 
     next = hash_table->table[bin];
+
+    if (next) printf("key: %s\n next->key: %s\n", key, next->key);
     
     while (next && next->key && strcmp(key, next->key) > 0){
         last = next;
@@ -73,15 +75,15 @@ int hash_table_set(hash_table_t* hash_table, char* key, symbol* value){
     }
 
     if (next && next->key && strcmp(key, next->key) == 0){
-        strcpy(pair->value.id, value->id);
-        pair->value.symb_cat = value->symb_cat;
-        pair->value.cat = value->cat;
-        pair->value.type = value->type;
-        pair->value.size = value->size;
-        pair->value.num_param = value->num_param;
-        pair->value.position = value->position;
-        pair->value.value = value->value;
-        pair->value.num_local_var = value->num_local_var;
+        strcpy(next->value.id, value->id);
+        next->value.symb_cat = value->symb_cat;
+        next->value.cat = value->cat;
+        next->value.type = value->type;
+        next->value.size = value->size;
+        next->value.num_param = value->num_param;
+        next->value.position = value->position;
+        next->value.value = value->value;
+        next->value.num_local_var = value->num_local_var;
 
         return 0;
     }
@@ -117,7 +119,7 @@ symbol* hash_table_get(hash_table_t* hash_table, char* key){
     return &pair->value;
 }
 
-symbol* symbol_create(char *id, int symb_cat, int cat, int type, int size, int num_param, int position, int value, int num_local_var){
+symbol* symbol_create(char *id, int symb_cat, int type, int cat, int size, int num_param, int position, int value, int num_local_var){
     symbol *new;
     new = calloc(1,sizeof(symbol));
     strcpy(new->id, id);

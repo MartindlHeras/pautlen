@@ -10,6 +10,8 @@ all: alfa
 alfa: alfa.c alfa.h lex.yy.o y.tab.o generacion.o tabla_simbolos.o hash.o
 	gcc -Wall -g $^ -o $@
 
+run: ./script.sh
+
 generacion.o: generacion.c generacion.h
 	gcc -Wall -g -c $<
 
@@ -36,4 +38,7 @@ y.tab.h: alfa.y
 
 .PHONY: clean
 clean:
-	rm -rf *.o lex.yy.* y.* alfa prueba/misalida.output
+	rm -rf *.o lex.yy.* y.* prueba/*.o alfa prueba/misalida.asm
+
+clear:
+	rm -rf *.o lex.yy.* y.* prueba/*.o

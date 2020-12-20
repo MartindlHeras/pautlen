@@ -14,8 +14,8 @@ void escribir_cabecera_bss(FILE* fpasm){
 
 void escribir_subseccion_data(FILE* fpasm){
   fprintf(fpasm, "segment .data\n");
-  fprintf(fpasm, "out_of_range db \"Accessing a memory out of range\",10,0\n");
-  fprintf(fpasm, "div_zero db \"Dividing by zero\",10,0\n");
+  fprintf(fpasm, "out_of_range db \"****Error de ejecucion: Indice fuera de rango.\",10,0\n");
+  fprintf(fpasm, "div_zero db \"****Error de ejecucion: Division por cero.\",10,0\n");
 }
 
 void declarar_variable(FILE* fpasm, char * nombre, int tipo, int tamano){
@@ -208,7 +208,7 @@ void leer(FILE* fpasm, char* nombre, int tipo){
   }else if(tipo == ENTERO){
     fprintf(fpasm, "call scan_int\n");
   }
-  fprintf(fpasm, "add esp, 4\n");
+  fprintf(fpasm, "add esp, 4\n"); //Posible poner dword
 }
 
 void escribir(FILE* fpasm, int es_variable, int tipo){

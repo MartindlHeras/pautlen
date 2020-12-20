@@ -221,7 +221,7 @@ funcion:
         if(close_scope(&aux_symbol_table) == -1) return -1;
 
         func_flag_dec = 0;
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
     };
 
 funcion_declaracion: 
@@ -240,7 +240,7 @@ funcion_declaracion:
 
         insert_table(&aux_symbol_table, $1.lexeme, aux_symb);
 
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
     };
 
 nombre_funcion: TOK_FUNCTION tipo TOK_IDENTIFICADOR {
@@ -266,7 +266,7 @@ nombre_funcion: TOK_FUNCTION tipo TOK_IDENTIFICADOR {
         strcpy($$.lexeme, $3.lexeme);
         $$.type = curr_type;
 
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
     };
 
 parametros_funcion:
@@ -399,7 +399,7 @@ asignacion:
 
         escribir_elemento_vector(yyout, $1.lexeme, aux_symb->size, $3.is_address);
         asignarDestinoEnPila(yyout, $3.is_address);
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
 
     };
 
@@ -436,7 +436,7 @@ elemento_vector:
         $$.type = aux_symb->type;
         $$.is_address = 1;
         strcpy($$.lexeme, $1.lexeme);
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
     };
 
 condicional:
@@ -505,7 +505,7 @@ lectura:
         }
 
         leer(yyout, $2.lexeme, aux_symb->type);
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
     };
 
 escritura:
@@ -575,11 +575,8 @@ exp:
 
             $$.type = INT;
             $$.is_address = 0;
-            if($3.value == 0){
-                printf("****Error de ejecucion: Division por 0\n");
-                return -1;
-            }
-            $$.value = $1.value / $3.value;
+            if (!$3.value) $$.value = -1;
+            else $$.value = $1.value / $3.value;
         }
 
     } | 
@@ -698,7 +695,7 @@ exp:
             operandoEnPilaAArgumento(yyout, 1);
             $$.is_address = 0;
         }
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
 
     } |
     constante {
@@ -768,7 +765,7 @@ exp:
         func_call = 0;
         $$.is_address = 0;
         $$.type = aux_symb->type;
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
     };
 
 lista_expresiones:
@@ -962,7 +959,7 @@ identificador:
             insert_table(&aux_symbol_table, $1.lexeme, aux_symb);
             declarar_variable(yyout, $1.lexeme, curr_type, curr_len);
         }
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
     };
 
 idpf: 
@@ -977,7 +974,7 @@ idpf:
         aux_symb = symbol_create($1.lexeme, PARAMETER, curr_type, SCALAR, -1, 1, -1, pos_params, -1);
 
         insert_table(&aux_symbol_table, $1.lexeme, aux_symb);
-        symbol_delete(aux_symb);
+        // symbol_delete(aux_symb);
     };
 
 %%
