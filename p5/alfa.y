@@ -176,7 +176,7 @@ tipo:
     };
 
 clase_vector:
-    TOK_ARRAY tipo TOK_CORCHETEIZQUIERDO constante_entera TOK_CORCHETEDERECHO {
+    TOK_ARRAY tipo TOK_CORCHETEIZQUIERDO TOK_CONSTANTE_ENTERA TOK_CORCHETEDERECHO {
         fprintf(yyout, ";R15:\t<clase_vector> ::= array <tipo> [ <constante_entera> ]\n");
         if($4.value > MAX || $4.value <= 0){
             printf("****Error semantico en lin %d: El tamanyo del vector %s excede los limites permitidos (1,64).\n", n_lines, $4.lexeme);
