@@ -913,14 +913,16 @@ constante_logica:
 
         $$.type = BOOL;
         $$.is_address = 0;
-        escribir_operando(yyout, "1", 0);
+        $$.value = 1;
+        //escribir_operando(yyout, "1", 0);
     } |
     TOK_FALSE {
         fprintf(yyout, ";R103:\t<constante_logica> ::= false\n");
 
         $$.type = BOOL;
         $$.is_address = 0;
-        escribir_operando(yyout, "0", 0);
+        $$.value = 0;
+        //escribir_operando(yyout, "0", 0);
     };
 
 constante_entera:

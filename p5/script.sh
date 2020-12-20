@@ -114,21 +114,21 @@ gcc -m32 -o prueba/funciones4 prueba/funciones4.o alfalib.o
 diff -bB prueba/misalida.output prueba/funciones4.output
 
 
-# # IF1
-# ./alfa prueba/if1.alf prueba/misalida.asm
-# nasm -g -o prueba/if1.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/if1 prueba/if1.o alfalib.o
+# IF1
+./alfa prueba/if1.alf prueba/misalida.asm
+nasm -g -o prueba/if1.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/if1 prueba/if1.o alfalib.o
 
 # ./prueba/if1 < prueba/if1.input > prueba/misalida.output
 # diff -bB prueba/misalida.output prueba/if1.output
 
-# IF2
-./alfa prueba/if2.alf prueba/misalida.asm
-nasm -g -o prueba/if2.o -f elf32 prueba/misalida.asm
-gcc -m32 -o prueba/if2 prueba/if2.o alfalib.o
-
-./prueba/if2 < prueba/if2.input > prueba/misalida.output
-diff -bB prueba/misalida.output prueba/if2.output
+# # IF2
+# ./alfa prueba/if2.alf prueba/misalida.asm
+# nasm -g -o prueba/if2.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/if2 prueba/if2.o alfalib.o
+#
+# ./prueba/if2 > prueba/misalida.output
+# diff -bB prueba/misalida.output prueba/if2.output
 
 # IF3
 ./alfa prueba/if3.alf prueba/misalida.asm
