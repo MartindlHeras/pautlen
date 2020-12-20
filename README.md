@@ -22,19 +22,11 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 - [x] comparaciones
 - [x] error_ej
 - [x] error_se
-- [x] funciones1
-- [ ] funciones2
-- [x] funciones3
-- [x] funciones4
-- [x] if1
-- [ ] if2
-- [ ] if3
+- [x] funciones
+- [x] ifs
 - [x] logicas1
 - [ ] logicas2 ???
-- [x] vectores1
-- [x] vectores2
-- [x] vectores3
-- [x] vectores4
+- [x] vectores
 - [x] while
 
 ### Enlaces útiles

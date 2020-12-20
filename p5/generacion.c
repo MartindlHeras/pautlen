@@ -229,27 +229,27 @@ void ifthenelse_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){
   fprintf(fpasm, "pop dword eax\n");
   if (exp_es_variable) fprintf(fpasm, "mov eax, [eax]\n");
   fprintf(fpasm, "cmp eax, 0\n");
-  fprintf(fpasm, "je ifthen_end_%d\n", etiqueta);
+  fprintf(fpasm, "je end_then_else_%d\n", etiqueta);
 }
 
 void ifthen_inicio(FILE * fpasm, int exp_es_variable, int etiqueta){
   fprintf(fpasm, "pop dword eax\n");
   if (exp_es_variable) fprintf(fpasm, "mov eax, [eax]\n");
   fprintf(fpasm, "cmp eax, 0\n");
-  fprintf(fpasm, "je ifthen_end_%d\n", etiqueta);
+  fprintf(fpasm, "je end_then_%d\n", etiqueta);
 }
 
 void ifthen_fin(FILE * fpasm, int etiqueta){
-  fprintf(fpasm, "ifthen_end_%d:\n", etiqueta);
+  fprintf(fpasm, "end_then_%d:\n", etiqueta);
 }
 
 void ifthenelse_fin_then(FILE * fpasm, int etiqueta){
-  fprintf(fpasm, "jmp ifthenelse_end_%d\n", etiqueta);
-  fprintf(fpasm, "ifthen_end_%d:\n", etiqueta);
+  fprintf(fpasm, "jmp end_else_%d\n", etiqueta);
+  fprintf(fpasm, "end_then_else_%d:\n", etiqueta);
 }
 
 void ifthenelse_fin(FILE * fpasm, int etiqueta){
-  fprintf(fpasm, "ifthenelse_end_%d:\n", etiqueta);
+  fprintf(fpasm, "end_else_%d:\n", etiqueta);
 }
 
 

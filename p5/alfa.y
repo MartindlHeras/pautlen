@@ -442,11 +442,17 @@ elemento_vector:
 condicional:
     if_exp_sentencias TOK_LLAVEDERECHA {
         fprintf(yyout, ";R50:\t<condicional> ::= if ( <exp> ) { <sentencias> }\n");
-        ifthen_fin(yyout, $1.label);
+        ifthenelse_fin(yyout, $1.label);
     } |
     if_exp_sentencias TOK_LLAVEDERECHA TOK_ELSE TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA{
         fprintf(yyout, ";R51:\t<condicional> ::= if ( <exp> ) { <sentencias> } else { <sentencias> }\n");
         ifthenelse_fin(yyout, $1.label);
+    };
+
+if_exp_sentencias:
+    if_exp sentencias {
+        $$.label = $1.label;
+        ifthenelse_fin_then(yyout, $$.label);
     };
 
 if_exp:
@@ -458,13 +464,7 @@ if_exp:
         }
 
         $$.label = label++;
-        ifthen_inicio(yyout, $3.is_address, $$.label);
-    };
-
-if_exp_sentencias:
-    if_exp sentencias {
-        $$.label = $1.label;
-        ifthenelse_fin_then(yyout, $$.label);
+        ifthenelse_inicio(yyout, $3.is_address, $$.label);
     };
 
 bucle:

@@ -5,7 +5,7 @@
 # Grupo 140
 ########################################################
 
-PRUEBA = aritmeticas comparaciones error_ej error_se funciones1 funciones2 funciones3 funciones4 if1 if2 if3 logicas1 logicas2 vectores1 vectores2 vectores3 vectores4 while
+PRUEBA = prueba/aritmeticas1 prueba/aritmeticas2 prueba/comparaciones prueba/error_ej1 prueba/error_ej2 prueba/error_se prueba/funciones1 prueba/funciones2 prueba/funciones3 prueba/funciones4 prueba/if1 prueba/if2 prueba/if3 prueba/logicas1 prueba/logicas2 prueba/vectores1 prueba/vectores2 prueba/vectores3 prueba/vectores4 prueba/while
 
 all: alfa
 
@@ -41,7 +41,7 @@ y.tab.h: alfa.y
 
 .PHONY: clean
 clean:
-	rm -rf *.o lex.yy.* y.* prueba/*.o alfa prueba/misalida.* prueba/$(PRUEBA)
+	rm -rf *.o lex.yy.* y.* prueba/*.o alfa prueba/misalida.* $(PRUEBA)
 
 clear:
-	rm -rf *.o lex.yy.* y.* prueba/*.o prueba/$(PRUEBA)
+	rm -rf *.o lex.yy.* y.* prueba/*.o $(PRUEBA)

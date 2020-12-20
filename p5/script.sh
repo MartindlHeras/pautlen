@@ -119,7 +119,7 @@ diff -bB prueba/misalida.output prueba/funciones4.output
 nasm -g -o prueba/if1.o -f elf32 prueba/misalida.asm
 gcc -m32 -o prueba/if1 prueba/if1.o alfalib/alfalib.o
 
-./prueba/if1 < prueba/if1.input > prueba/misalida.output
+./prueba/if1 > prueba/misalida.output
 diff -bB prueba/misalida.output prueba/if1.output
 
 # IF2
@@ -161,7 +161,7 @@ diff -bB prueba/misalida.output prueba/logicas1_3.output
 ./prueba/logicas1 < prueba/logicas1_4.input > prueba/misalida.output
 diff -bB prueba/misalida.output prueba/logicas1_4.output
 
-LOGICAS2
+# LOGICAS2
 ./alfa prueba/logicas2.alf prueba/misalida.asm
 nasm -g -o prueba/logicas2.o -f elf32 prueba/misalida.asm
 gcc -m32 -o prueba/logicas2 prueba/logicas2.o alfalib/alfalib.o
