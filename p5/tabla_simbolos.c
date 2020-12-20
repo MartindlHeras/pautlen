@@ -36,8 +36,9 @@ int insert_table(symbol_table *hashes, char *key, symbol *value){
       hashes->local_hash = hash_table_create(65536);
 
       res_value = hash_table_set(hashes->local_hash, key, value);
+      if(res_value == -1) return -1;
     }
-    return res_value;
+    return 0;
   }
 }
 
@@ -45,15 +46,13 @@ int close_scope(symbol_table *hashes){
 
   if(!hashes) return -1;
 
-  if(hashes->local_flag == 0){
-    return -1;
-  } 
-  else
+  if(hashes->local_flag == 1)
   {
-    hashes->local_flag = 0;
     free(hashes->local_hash);
+    hashes->local_flag = 0;
     return 0;
   }
+  return -1;
 }
 
 symbol *search_table(symbol_table *hashes, char *key){
