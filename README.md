@@ -30,11 +30,11 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 - [ ] if2
 - [ ] if3
 - [x] logicas1
-- [ ] logicas2
+- [ ] logicas2 ???
 - [x] vectores1
-- [ ] vectores2
+- [x] vectores2
 - [x] vectores3
-- [ ] vectores4
+- [x] vectores4
 - [x] while
 
 ### Enlaces útiles

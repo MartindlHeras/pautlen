@@ -657,8 +657,8 @@ exp:
         }
 
         if($2.type == BOOL){
-            no(yyout, $2.is_address, 1);
-
+            no(yyout, $2.is_address, label);
+            label++;
             $$.type = BOOL;
             $$.is_address = 0;
             $$.value = !$2.value;
@@ -748,10 +748,6 @@ exp:
 		    return -1;
         }
         if(num_params_call != aux_symb->num_param){
-<<<<<<< HEAD
-            printf("num_params_call: %d y aux_symb->num_param: %d\n", num_params_call, aux_symb->num_param);
-=======
->>>>>>> 1a22d322234249c989712857772e1c09504bcad3
             printf("****Error semantico en lin %d: Numero incorrecto de parametros en llamada a funcion.\n", n_lines);
             return -1;
         }
@@ -922,7 +918,7 @@ constante_logica:
         $$.value = 1;
         fprintf(yyout, ";R102:\t<constante_logica> ::= true\n");
 
-        //escribir_operando(yyout, "1", 0);
+        escribir_operando(yyout, "1", 0);
     } |
     TOK_FALSE {
 
@@ -931,7 +927,7 @@ constante_logica:
         $$.value = 0;
         fprintf(yyout, ";R103:\t<constante_logica> ::= false\n");
 
-        //escribir_operando(yyout, "0", 0);
+        escribir_operando(yyout, "0", 0);
     };
 
 constante_entera:
