@@ -1,158 +1,155 @@
-# ARITMETICAS1
-./alfa prueba/aritmeticas1.alf prueba/misalida.asm
-nasm -g -o prueba/aritmeticas1.o -f elf32 prueba/misalida.asm
-gcc -m32 -o prueba/aritmeticas1 prueba/aritmeticas1.o alfalib.o
-
-./prueba/aritmeticas1 < prueba/aritmeticas1_1.input > prueba/misalida.output
-diff -bB prueba/misalida.output prueba/aritmeticas1_1.output
-./prueba/aritmeticas1 < prueba/aritmeticas1_2.input > prueba/misalida.output
-diff -bB prueba/misalida.output prueba/aritmeticas1_2.output
-./prueba/aritmeticas1 < prueba/aritmeticas1_3.input > prueba/misalida.output
-diff -bB prueba/misalida.output prueba/aritmeticas1_3.output
-
-# ARITMETICAS2
-./alfa prueba/aritmeticas2.alf prueba/misalida.asm
-nasm -g -o prueba/aritmeticas2.o -f elf32 prueba/misalida.asm
-gcc -m32 -o prueba/aritmeticas2 prueba/aritmeticas2.o alfalib.o
-
-./prueba/aritmeticas2 < prueba/aritmeticas2_1.input > prueba/misalida.output
-diff -bB prueba/misalida.output prueba/aritmeticas2_1.output
-./prueba/aritmeticas2 < prueba/aritmeticas2_2.input > prueba/misalida.output
-diff -bB prueba/misalida.output prueba/aritmeticas2_2.output
-./prueba/aritmeticas2 < prueba/aritmeticas2_3.input > prueba/misalida.output
-diff -bB prueba/misalida.output prueba/aritmeticas2_3.output
-
-
-# COMPARACIONES
-./alfa prueba/comparaciones.alf prueba/misalida.asm
-nasm -g -o prueba/comparaciones.o -f elf32 prueba/misalida.asm
-gcc -m32 -o prueba/comparaciones prueba/comparaciones.o alfalib.o
-
-./prueba/comparaciones < prueba/comparaciones.input > prueba/misalida.output
-diff -bB prueba/misalida.output prueba/comparaciones.output
-
-
-# ERRORES NO SEMANTICOS
-./alfa prueba/error_ej1.alf prueba/misalida.asm
+# # ARITMETICAS1
+# ./alfa prueba/aritmeticas1.alf prueba/misalida.asm
+# nasm -g -o prueba/aritmeticas1.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/aritmeticas1 prueba/aritmeticas1.o alfalib.o
+#
+# ./prueba/aritmeticas1 < prueba/aritmeticas1_1.input > prueba/misalida.output
+# diff -bB prueba/misalida.output prueba/aritmeticas1_1.output
+# ./prueba/aritmeticas1 < prueba/aritmeticas1_2.input > prueba/misalida.output
+# diff -bB prueba/misalida.output prueba/aritmeticas1_2.output
+# ./prueba/aritmeticas1 < prueba/aritmeticas1_3.input > prueba/misalida.output
+# diff -bB prueba/misalida.output prueba/aritmeticas1_3.output
+#
+# # ARITMETICAS2
+# ./alfa prueba/aritmeticas2.alf prueba/misalida.asm
+# nasm -g -o prueba/aritmeticas2.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/aritmeticas2 prueba/aritmeticas2.o alfalib.o
+#
+# ./prueba/aritmeticas2 < prueba/aritmeticas2_1.input > prueba/misalida.output
+# diff -bB prueba/misalida.output prueba/aritmeticas2_1.output
+# ./prueba/aritmeticas2 < prueba/aritmeticas2_2.input > prueba/misalida.output
+# diff -bB prueba/misalida.output prueba/aritmeticas2_2.output
+# ./prueba/aritmeticas2 < prueba/aritmeticas2_3.input > prueba/misalida.output
+# diff -bB prueba/misalida.output prueba/aritmeticas2_3.output
+#
+#
+# # COMPARACIONES
+# ./alfa prueba/comparaciones.alf prueba/misalida.asm
+# nasm -g -o prueba/comparaciones.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/comparaciones prueba/comparaciones.o alfalib.o
+#
+# ./prueba/comparaciones > prueba/misalida.output
+# diff -bB prueba/misalida.output prueba/comparaciones.output
+#
+#
+# # ERRORES NO SEMANTICOS
+# ./alfa prueba/error_ej1.alf prueba/misalida.asm
 # nasm -g -o prueba/error_ej1.o -f elf32 prueba/misalida.asm
 # gcc -m32 -o prueba/error_ej1 prueba/error_ej1.o alfalib.o
-
-# ./error_ej1 < prueba/error_ej1.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_ej1.output
-
-./alfa prueba/error_ej2.alf prueba/misalida.asm
+#
+# ./prueba/error_ej1
+#
+# ./alfa prueba/error_ej2.alf prueba/misalida.asm
 # nasm -g -o prueba/error_ej2.o -f elf32 prueba/misalida.asm
 # gcc -m32 -o prueba/error_ej2 prueba/error_ej2.o alfalib.o
-
-# ./error_ej2 < prueba/error_ej2.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_ej2.output
-
-
-# ERRORES SEMANTICOS
-./alfa prueba/error_se1.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se1.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se1 prueba/error_se1.o alfalib.o
-
-# ./error_se1 < prueba/error_se1.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se1.output
-
-./alfa prueba/error_se2.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se2.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se2 prueba/error_se2.o alfalib.o
-
-# ./error_se2 < prueba/error_se2.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se2.output
-
-./alfa prueba/error_se3.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se3.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se3 prueba/error_se3.o alfalib.o
-
-# ./error_se3 < prueba/error_se3.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se3.output
-
-./alfa prueba/error_se4.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se4.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se4 prueba/error_se4.o alfalib.o
-
-# ./error_se4 < prueba/error_se4.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se4.output
-
-./alfa prueba/error_se5.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se5.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se5 prueba/error_se5.o alfalib.o
-
-# ./error_se5 < prueba/error_se5.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se5.output
-
-./alfa prueba/error_se6.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se6.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se6 prueba/error_se6.o alfalib.o
-
-# ./error_se6 < prueba/error_se6.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se6.output
-
-./alfa prueba/error_se7.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se7.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se7 prueba/error_se7.o alfalib.o
-
-# ./error_se7 < prueba/error_se7.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se7.output
-
-./alfa prueba/error_se8.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se8.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se8 prueba/error_se8.o alfalib.o
-
-# ./error_se8 < prueba/error_se8.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se8.output
-
-./alfa prueba/error_se9.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se9.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se9 prueba/error_se9.o alfalib.o
-
-# ./error_se9 < prueba/error_se9.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se9.output
-
-./alfa prueba/error_se10.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se10.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se10 prueba/error_se10.o alfalib.o
-
-# ./error_se10 < prueba/error_se10.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se10.output
-
-./alfa prueba/error_se11.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se11.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se11 prueba/error_se11.o alfalib.o
-
-# ./error_se11 < prueba/error_se11.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se11.output
-
-./alfa prueba/error_se12.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se12.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se12 prueba/error_se12.o alfalib.o
-
-# ./error_se12 < prueba/error_se12.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se12.output
-
-./alfa prueba/error_se13.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se13.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se13 prueba/error_se13.o alfalib.o
-
-# ./error_se13 < prueba/error_se13.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se13.output
-
-./alfa prueba/error_se14.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se14.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se14 prueba/error_se14.o alfalib.o
-
-# ./error_se14 < prueba/error_se14.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se14.output
-
-./alfa prueba/error_se15.alf prueba/misalida.asm
-# nasm -g -o prueba/error_se15.o -f elf32 prueba/misalida.asm
-# gcc -m32 -o prueba/error_se15 prueba/error_se15.o alfalib.o
-
-# ./error_se15 < prueba/error_se15.input > prueba/misalida.output
-# diff -bB prueba/misalida.output prueba/error_se15.output
+#
+# ./prueba/error_ej2
+#
+# # ERRORES SEMANTICOS
+# ./alfa prueba/error_se1.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se1.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se1 prueba/error_se1.o alfalib.o
+#
+# # ./error_se1 < prueba/error_se1.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se1.output
+#
+# ./alfa prueba/error_se2.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se2.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se2 prueba/error_se2.o alfalib.o
+#
+# # ./error_se2 < prueba/error_se2.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se2.output
+#
+# ./alfa prueba/error_se3.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se3.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se3 prueba/error_se3.o alfalib.o
+#
+# # ./error_se3 < prueba/error_se3.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se3.output
+#
+# ./alfa prueba/error_se4.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se4.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se4 prueba/error_se4.o alfalib.o
+#
+# # ./error_se4 < prueba/error_se4.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se4.output
+#
+# ./alfa prueba/error_se5.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se5.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se5 prueba/error_se5.o alfalib.o
+#
+# # ./error_se5 < prueba/error_se5.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se5.output
+#
+# ./alfa prueba/error_se6.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se6.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se6 prueba/error_se6.o alfalib.o
+#
+# # ./error_se6 < prueba/error_se6.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se6.output
+#
+# ./alfa prueba/error_se7.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se7.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se7 prueba/error_se7.o alfalib.o
+#
+# # ./error_se7 < prueba/error_se7.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se7.output
+#
+# ./alfa prueba/error_se8.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se8.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se8 prueba/error_se8.o alfalib.o
+#
+# # ./error_se8 < prueba/error_se8.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se8.output
+#
+# ./alfa prueba/error_se9.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se9.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se9 prueba/error_se9.o alfalib.o
+#
+# # ./error_se9 < prueba/error_se9.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se9.output
+#
+# ./alfa prueba/error_se10.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se10.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se10 prueba/error_se10.o alfalib.o
+#
+# # ./error_se10 < prueba/error_se10.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se10.output
+#
+# ./alfa prueba/error_se11.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se11.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se11 prueba/error_se11.o alfalib.o
+#
+# # ./error_se11 < prueba/error_se11.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se11.output
+#
+# ./alfa prueba/error_se12.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se12.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se12 prueba/error_se12.o alfalib.o
+#
+# # ./error_se12 < prueba/error_se12.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se12.output
+#
+# ./alfa prueba/error_se13.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se13.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se13 prueba/error_se13.o alfalib.o
+#
+# # ./error_se13 < prueba/error_se13.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se13.output
+#
+# ./alfa prueba/error_se14.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se14.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se14 prueba/error_se14.o alfalib.o
+#
+# # ./error_se14 < prueba/error_se14.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se14.output
+#
+# ./alfa prueba/error_se15.alf prueba/misalida.asm
+# # nasm -g -o prueba/error_se15.o -f elf32 prueba/misalida.asm
+# # gcc -m32 -o prueba/error_se15 prueba/error_se15.o alfalib.o
+#
+# # ./error_se15 < prueba/error_se15.input > prueba/misalida.output
+# # diff -bB prueba/misalida.output prueba/error_se15.output
 
 
 # FUNCIONES1
@@ -160,7 +157,7 @@ diff -bB prueba/misalida.output prueba/comparaciones.output
 nasm -g -o prueba/funciones1.o -f elf32 prueba/misalida.asm
 gcc -m32 -o prueba/funciones1 prueba/funciones1.o alfalib.o
 
-./prueba/funciones1 < prueba/funciones1.input > prueba/misalida.output
+./prueba/funciones1 > prueba/misalida.output
 diff -bB prueba/misalida.output prueba/funciones1.output
 
 # FUNCIONES2

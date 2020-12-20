@@ -42,16 +42,16 @@ int label = 0;
 }
 
 %token TOK_MAIN
-%token TOK_INT       
-%token TOK_BOOLEAN   
-%token TOK_ARRAY     
-%token TOK_FUNCTION  
-%token TOK_IF        
-%token TOK_ELSE      
-%token TOK_WHILE     
-%token TOK_SCANF     
-%token TOK_PRINTF    
-%token TOK_RETURN    
+%token TOK_INT
+%token TOK_BOOLEAN
+%token TOK_ARRAY
+%token TOK_FUNCTION
+%token TOK_IF
+%token TOK_ELSE
+%token TOK_WHILE
+%token TOK_SCANF
+%token TOK_PRINTF
+%token TOK_RETURN
 
 
 /* S�mbolos */
@@ -61,7 +61,7 @@ int label = 0;
 %token TOK_PARENTESISDERECHO
 %token TOK_CORCHETEIZQUIERDO
 %token TOK_CORCHETEDERECHO
-%token TOK_LLAVEIZQUIERDA 
+%token TOK_LLAVEIZQUIERDA
 %token TOK_LLAVEDERECHA
 %token TOK_ASIGNACION
 %token TOK_MAS
@@ -105,7 +105,7 @@ int label = 0;
 %start programa
 
 %left TOK_IGUAL TOK_DISTINTO TOK_MENORIGUAL TOK_MAYORIGUAL TOK_MENOR TOK_MAYOR
-%left TOK_AND 
+%left TOK_AND
 %left TOK_OR
 %left TOK_MENOS TOK_MAS
 %left TOK_DIVISION TOK_ASTERISCO
@@ -119,40 +119,40 @@ programa:
         escribir_fin(yyout);
     };
 
-escritura_cabecera: 
+escritura_cabecera:
     %empty {
         escribir_subseccion_data(yyout);
         escribir_cabecera_bss(yyout);
     };
 
-escritura_codigo: 
+escritura_codigo:
     %empty {
         escribir_segmento_codigo(yyout);
     };
 
-escritura_main: 
+escritura_main:
     %empty {
         escribir_inicio_main(yyout);
     };
 
 declaraciones:
-    declaracion { 
+    declaracion {
         fprintf(yyout, ";R2:\t<declaraciones> ::= <declaracion>\n");
-    } | 
+    } |
     declaracion declaraciones {
         fprintf(yyout, ";R3:\t<declaraciones> ::= <declaracion> <declaraciones>\n");
     };
 
 declaracion:
-    clase identificadores TOK_PUNTOYCOMA { 
-        fprintf(yyout, ";R4:\t<declaracion> ::= <clase> <identificadores> ;\n"); 
+    clase identificadores TOK_PUNTOYCOMA {
+        fprintf(yyout, ";R4:\t<declaracion> ::= <clase> <identificadores> ;\n");
     };
 
 clase:
     clase_escalar {
         fprintf(yyout, ";R5:\t<clase> ::= <clase_escalar>\n");
         curr_class = SCALAR;
-    } | 
+    } |
     clase_vector {
         fprintf(yyout, ";R7:\t<clase> ::= <clase_vector>\n");
         curr_class = VECTOR;
@@ -164,13 +164,13 @@ clase_escalar:
     };
 
 tipo:
-    TOK_INT { 
+    TOK_INT {
         fprintf(yyout, ";R10:\t<tipo> ::= int\n");
         curr_type = INT;
         curr_len = 1;
-    } | 
-    TOK_BOOLEAN { 
-        fprintf(yyout, ";R11:\t<tipo> ::= boolean\n"); 
+    } |
+    TOK_BOOLEAN {
+        fprintf(yyout, ";R11:\t<tipo> ::= boolean\n");
         curr_type = BOOL;
         curr_len = 1;
     };
@@ -189,7 +189,7 @@ clase_vector:
 identificadores:
     identificador {
         fprintf(yyout, ";R18:\t<identificadores> ::= <identificador>\n");
-    } | 
+    } |
     identificador TOK_COMA identificadores{
         fprintf(yyout, ";R19:\t<identificadores> ::= <identificador> , <identificadores>\n");
     };
@@ -199,7 +199,7 @@ funciones:
         fprintf(yyout, ";R20:\t<funciones> ::= <funcion> <funciones>\n");
     } |
     %empty {
-        fprintf(yyout, ";R21:\t<funciones> ::=\n"); 
+        fprintf(yyout, ";R21:\t<funciones> ::=\n");
     };
 
 funcion:
@@ -224,9 +224,9 @@ funcion:
         // symbol_delete(aux_symb);
     };
 
-funcion_declaracion: 
+funcion_declaracion:
     nombre_funcion TOK_PARENTESISIZQUIERDO parametros_funcion TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA declaraciones_funcion {
-        
+
         strcpy($$.lexeme, $1.lexeme);
         $$.type = $1.type;
 
@@ -295,7 +295,7 @@ parametro_funcion:
 declaraciones_funcion:
     declaraciones {
         fprintf(yyout, ";R28:\t<declaraciones_funcion> ::= <declaraciones>\n");
-    } | 
+    } |
     %empty {
         fprintf(yyout, ";R29:\t<declaraciones_funcion> ::=\n");
     };
@@ -303,7 +303,7 @@ declaraciones_funcion:
 sentencias:
     sentencia {
         fprintf(yyout, ";R30:\t<sentencias> ::= <sentencia>\n");
-    } | 
+    } |
     sentencia sentencias {
         fprintf(yyout, ";R31:\t<sentencias> ::= <sentencia> <sentencias>\n");
     };
@@ -311,21 +311,21 @@ sentencias:
 sentencia:
     sentencia_simple TOK_PUNTOYCOMA {
         fprintf(yyout, ";R32:\t<sentencia> ::= <sentencia_simple> ;\n");
-    } | 
+    } |
     bloque {
         fprintf(yyout, ";R33:\t<sentencia> ::= <bloque>\n");
     };
 
 sentencia_simple:
-    asignacion { 
+    asignacion {
         fprintf(yyout, ";R34:\t<sentencia_simple> ::= <asignacion>\n");
-    } |   
+    } |
     lectura {
         fprintf(yyout, ";R35:\t<sentencia_simple> ::= <lectura>\n");
-    } | 
+    } |
     escritura {
         fprintf(yyout, ";R36:\t<sentencia_simple> ::= <escritura>\n");
-    } | 
+    } |
     retorno_funcion {
         fprintf(yyout, ";R38:\t<sentencia_simple> ::= <retorno_funcion>\n");
     };
@@ -333,7 +333,7 @@ sentencia_simple:
 bloque:
     condicional {
         fprintf(yyout, ";R40:\t<bloque> ::= <condicional>\n");
-    } | 
+    } |
     bucle {
         fprintf(yyout, ";R41:\t<bloque> ::= <bucle>\n");
     };
@@ -378,7 +378,7 @@ asignacion:
             printf("****Error semantico en linea %d: Asignacion incompatible\n", n_lines);
             return -1;
         }
-        
+
         aux_symb = search_table(&aux_symbol_table, $1.lexeme);
         if(!aux_symb){
             printf("****Error semantico en linea %d: Acceso a variable no delcarada (%s)\n", n_lines, $1.lexeme);
@@ -413,7 +413,7 @@ elemento_vector:
         }
 
         aux_symb = search_table(&aux_symbol_table, $1.lexeme);
-        
+
         if(!aux_symb){
             printf("****Error semantico en lin %d: Acceso a variable no declarada (%s).\n", n_lines, $1.lexeme);
             return -1;
@@ -442,14 +442,14 @@ elemento_vector:
 condicional:
     if_exp_sentencias TOK_LLAVEDERECHA {
         fprintf(yyout, ";R50:\t<condicional> ::= if ( <exp> ) { <sentencias> }\n");
-        ifthenelse_fin(yyout, $1.label);
+        ifthen_fin(yyout, $1.label);
     } |
     if_exp_sentencias TOK_LLAVEDERECHA TOK_ELSE TOK_LLAVEIZQUIERDA sentencias TOK_LLAVEDERECHA{
         fprintf(yyout, ";R51:\t<condicional> ::= if ( <exp> ) { <sentencias> } else { <sentencias> }\n");
         ifthenelse_fin(yyout, $1.label);
     };
 
-if_exp: 
+if_exp:
     TOK_IF TOK_PARENTESISIZQUIERDO exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA {
 
         if($3.type != BOOL){
@@ -461,7 +461,7 @@ if_exp:
         ifthen_inicio(yyout, $3.is_address, $$.label);
     };
 
-if_exp_sentencias: 
+if_exp_sentencias:
     if_exp sentencias {
         $$.label = $1.label;
         ifthenelse_fin_then(yyout, $$.label);
@@ -473,13 +473,13 @@ bucle:
         while_fin(yyout, $1.label);
     };
 
-while: 
+while:
     TOK_WHILE TOK_PARENTESISIZQUIERDO {
         $$.label = label++;
         while_inicio(yyout, $$.label);
     };
 
-while_exp: 
+while_exp:
     while exp TOK_PARENTESISDERECHO TOK_LLAVEIZQUIERDA{
         if($2.type != BOOL){
             printf("****Error semantico en linea %d: Condicional con condicion de tipo int.\n", n_lines);
@@ -544,7 +544,7 @@ exp:
             $$.value = $1.value + $3.value;
         }
 
-    } | 
+    } |
     exp TOK_MENOS exp {
         fprintf(yyout, ";R73:\t<exp> ::= <exp> - <exp>\n");
 
@@ -561,7 +561,7 @@ exp:
             $$.value = $1.value - $3.value;
         }
 
-    } | 
+    } |
     exp TOK_DIVISION exp {
         fprintf(yyout, ";R74:\t<exp> ::= <exp> / <exp>\n");
 
@@ -579,7 +579,7 @@ exp:
             else $$.value = $1.value / $3.value;
         }
 
-    } | 
+    } |
     exp TOK_ASTERISCO exp {
         fprintf(yyout, ";R75:\t<exp> ::= <exp> * <exp>\n");
 
@@ -596,7 +596,7 @@ exp:
             $$.value = $1.value * $3.value;
         }
 
-    } | 
+    } |
     TOK_MENOS exp {
         fprintf(yyout, ";R76:\t<exp> ::= - <exp>\n");
 
@@ -613,7 +613,7 @@ exp:
             $$.value = -$2.value;
         }
 
-    } | 
+    } |
     exp TOK_AND exp {
         fprintf(yyout, ";R77:\t<exp> ::= <exp> && <exp>\n");
 
@@ -630,7 +630,7 @@ exp:
             $$.value = $1.value && $3.value;
         }
 
-    } | 
+    } |
     exp TOK_OR exp {
         fprintf(yyout, ";R78:\t<exp> ::= <exp> || <exp>\n");
 
@@ -647,7 +647,7 @@ exp:
             $$.value = $1.value || $3.value;
         }
 
-    } | 
+    } |
     TOK_NOT exp {
         fprintf(yyout, ";R79:\t<exp> ::= ! <exp>\n");
 
@@ -710,12 +710,12 @@ exp:
         fprintf(yyout, ";R82:\t<exp> ::= ( <exp> )\n");
         $$.type = $2.type;
         $$.is_address = $2.is_address;
-    } | 
+    } |
     TOK_PARENTESISIZQUIERDO comparacion TOK_PARENTESISDERECHO {
         fprintf(yyout, ";R83:\t<exp> ::= ( <comparacion> )\n");
         $$.type = $2.type;
         $$.is_address = $2.is_address;
-    } | 
+    } |
     elemento_vector {
         fprintf(yyout, ";R85:\t<exp> ::= <elemento_vector>\n");
 
@@ -738,7 +738,7 @@ exp:
             $$.is_address = 0;
         }
 
-    } | 
+    } |
     TOK_IDENTIFICADOR TOK_PARENTESISIZQUIERDO lista_expresiones TOK_PARENTESISDERECHO {
         fprintf(yyout, ";R88:\t<exp> ::= <identificador> ( <lista_expresiones> )\n");
 
@@ -772,7 +772,7 @@ lista_expresiones:
     exp resto_lista_expresiones {
         fprintf(yyout, ";R89:\t<lista_expresiones> ::= <exp> <resto_lista_expresiones>\n");
         num_params_call++;
-    } | 
+    } |
     %empty {
         fprintf(yyout, ";R90:\t<lista_expresiones> ::=\n");
     };
@@ -781,7 +781,7 @@ resto_lista_expresiones:
     TOK_COMA exp resto_lista_expresiones {
         fprintf(yyout, ";R91:\t<resto_lista_expresiones> ::= , <exp> <resto_lista_expresiones>\n");
         num_params_call++;
-    } | 
+    } |
     %empty {
         fprintf(yyout, ";R92:\t<resto_lista_expresiones> ::=\n");
     };
@@ -803,7 +803,7 @@ comparacion:
             $$.is_address = 0;
             $$.value = $1.value == $3.value;
         }
-    } | 
+    } |
     exp TOK_DISTINTO exp {
         fprintf(yyout, ";R94:\t<comparacion> ::= <exp> != <exp>\n");
 
@@ -821,7 +821,7 @@ comparacion:
             $$.value = $1.value != $3.value;
         }
 
-    } | 
+    } |
     exp TOK_MENORIGUAL exp {
         fprintf(yyout, ";R95:\t<comparacion> ::= <exp> <= <exp>\n");
 
@@ -839,7 +839,7 @@ comparacion:
             $$.value = $1.value <= $3.value;
         }
 
-    } | 
+    } |
     exp TOK_MAYORIGUAL exp {
         fprintf(yyout, ";R96:\t<comparacion> ::= <exp> >= <exp>\n");
 
@@ -875,7 +875,7 @@ comparacion:
             $$.value = $1.value < $3.value;
         }
 
-    } | 
+    } |
     exp TOK_MAYOR exp {
         fprintf(yyout, ";R98:\t<comparacion> ::= <exp> > <exp>\n");
 
@@ -900,7 +900,7 @@ constante:
         fprintf(yyout, ";R100:\t<constante> ::= <constante_entera>\n");
         $$.type = $1.type;
         $$.is_address = $1.is_address;
-    } | 
+    } |
     constante_logica {
         fprintf(yyout, ";R101:\t<constante> ::= <constante_logica>\n");
         $$.type = $1.type;
@@ -914,7 +914,7 @@ constante_logica:
         $$.type = BOOL;
         $$.is_address = 0;
         escribir_operando(yyout, "1", 0);
-    } | 
+    } |
     TOK_FALSE {
         fprintf(yyout, ";R103:\t<constante_logica> ::= false\n");
 
@@ -940,7 +940,7 @@ identificador:
     TOK_IDENTIFICADOR {
         fprintf(yyout, ";R108:\t<identificador> ::= TOK_IDENTIFICADOR\n");
         if(search_table(&aux_symbol_table, $1.lexeme)){
-            printf( "****Error semantico en linea %d: Declaracion duplicada.", n_lines);
+            printf( "****Error semantico en linea %d: Declaracion duplicada.\n", n_lines);
             return -1;
         }
         if(func_flag_dec == 1){
@@ -962,7 +962,7 @@ identificador:
         // symbol_delete(aux_symb);
     };
 
-idpf: 
+idpf:
     TOK_IDENTIFICADOR {
         fprintf(yyout, ";R108:\t<identificador> ::= TOK_IDENTIFICADOR\n");
 
