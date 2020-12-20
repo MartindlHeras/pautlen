@@ -38,7 +38,7 @@ y.tab.h: alfa.y
 
 .PHONY: clean
 clean:
-	rm -rf *.o lex.yy.* y.* prueba/*.o alfa prueba/misalida.asm
+	rm -rf *.o lex.yy.* y.* prueba/*.o alfa prueba/misalida.*
 
 clear:
 	rm -rf *.o lex.yy.* y.* prueba/*.o

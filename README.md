@@ -18,9 +18,24 @@ Martín de las Heras | martin.delasheras@estudiante.uam.es
 
 ### Cosas para hacer
 
-- [ ] Makefile
-- [ ] No tenemos tabla y da segmentation fault
-- [ ] Ejemplos (compilar?)
+- [x] aritmeticas
+- [x] comparaciones
+- [x] error_ej
+- [x] error_se
+- [ ] funciones1
+- [ ] funciones2
+- [ ] funciones3
+- [ ] funciones4
+- [x] if1
+- [ ] if2
+- [ ] if3
+- [x] logicas1
+- [ ] logicas2
+- [ ] vectores1
+- [ ] vectores2
+- [ ] vectores3
+- [ ] vectores4
+- [x] while
 
 ### Enlaces útiles
 
