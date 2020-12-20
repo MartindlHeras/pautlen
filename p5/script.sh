@@ -1,69 +1,298 @@
-./alfa prueba/aritmeticas1.alf prueba/misalida.output
+# ARITMETICAS1
+./alfa prueba/aritmeticas1.alf prueba/misalida.asm
+nasm -g -o prueba/aritmeticas1.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/aritmeticas1 prueba/aritmeticas1.o alfalib.o
+
+./prueba/aritmeticas1 < aritmeticas1_1.input > misalida.output
 diff -bB prueba/misalida.output prueba/aritmeticas1_1.output
+./prueba/aritmeticas1 < aritmeticas1_2.input > misalida.output
+diff -bB prueba/misalida.output prueba/aritmeticas1_2.output
+./prueba/aritmeticas1 < aritmeticas1_3.input > misalida.output
+diff -bB prueba/misalida.output prueba/aritmeticas1_3.output
 
-./alfa prueba/aritmeticas2.alf prueba/misalida.output
+# ARITMETICAS2
+./alfa prueba/aritmeticas2.alf prueba/misalida.asm
+nasm -g -o prueba/aritmeticas2.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/aritmeticas2 prueba/aritmeticas2.o alfalib.o
+
+./prueba/aritmeticas2 < aritmeticas2_1.input > misalida.output
 diff -bB prueba/misalida.output prueba/aritmeticas2_1.output
+./prueba/aritmeticas2 < aritmeticas2_2.input > misalida.output
+diff -bB prueba/misalida.output prueba/aritmeticas2_2.output
+./prueba/aritmeticas2 < aritmeticas2_3.input > misalida.output
+diff -bB prueba/misalida.output prueba/aritmeticas2_3.output
 
-./alfa prueba/comparaciones.alf prueba/misalida.output
+
+# COMPARACIONES
+./alfa prueba/comparaciones.alf prueba/misalida.asm
+nasm -g -o prueba/comparaciones.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/comparaciones prueba/comparaciones.o alfalib.o
+
+./prueba/comparaciones < comparaciones.input > misalida.output
 diff -bB prueba/misalida.output prueba/comparaciones.output
 
-./alfa prueba/error_ej1.alf prueba/misalida.output
-./alfa prueba/error_ej2.alf prueba/misalida.output
 
-./alfa prueba/error_se1.alf prueba/misalida.output
-./alfa prueba/error_se2.alf prueba/misalida.output
-./alfa prueba/error_se3.alf prueba/misalida.output
-./alfa prueba/error_se4.alf prueba/misalida.output
-./alfa prueba/error_se5.alf prueba/misalida.output
-./alfa prueba/error_se6.alf prueba/misalida.output
-./alfa prueba/error_se7.alf prueba/misalida.output
-./alfa prueba/error_se8.alf prueba/misalida.output
-./alfa prueba/error_se9.alf prueba/misalida.output
-./alfa prueba/error_se10.alf prueba/misalida.output
-./alfa prueba/error_se11.alf prueba/misalida.output
-./alfa prueba/error_se12.alf prueba/misalida.output
-./alfa prueba/error_se13.alf prueba/misalida.output
-./alfa prueba/error_se14.alf prueba/misalida.output
-./alfa prueba/error_se15.alf prueba/misalida.output
+# ERRORES NO SEMANTICOS
+./alfa prueba/error_ej1.alf prueba/misalida.asm
+# nasm -g -o prueba/error_ej1.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_ej1 prueba/error_ej1.o alfalib.o
 
-./alfa prueba/funciones1.alf prueba/misalida.output
+# ./error_ej1 < error_ej1.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_ej1.output
+
+./alfa prueba/error_ej2.alf prueba/misalida.asm
+# nasm -g -o prueba/error_ej2.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_ej2 prueba/error_ej2.o alfalib.o
+
+# ./error_ej2 < error_ej2.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_ej2.output
+
+
+# ERRORES SEMANTICOS
+./alfa prueba/error_se1.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se1.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se1 prueba/error_se1.o alfalib.o
+
+# ./error_se1 < error_se1.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se1.output
+
+./alfa prueba/error_se2.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se2.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se2 prueba/error_se2.o alfalib.o
+
+# ./error_se2 < error_se2.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se2.output
+
+./alfa prueba/error_se3.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se3.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se3 prueba/error_se3.o alfalib.o
+
+# ./error_se3 < error_se3.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se3.output
+
+./alfa prueba/error_se4.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se4.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se4 prueba/error_se4.o alfalib.o
+
+# ./error_se4 < error_se4.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se4.output
+
+./alfa prueba/error_se5.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se5.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se5 prueba/error_se5.o alfalib.o
+
+# ./error_se5 < error_se5.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se5.output
+
+./alfa prueba/error_se6.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se6.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se6 prueba/error_se6.o alfalib.o
+
+# ./error_se6 < error_se6.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se6.output
+
+./alfa prueba/error_se7.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se7.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se7 prueba/error_se7.o alfalib.o
+
+# ./error_se7 < error_se7.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se7.output
+
+./alfa prueba/error_se8.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se8.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se8 prueba/error_se8.o alfalib.o
+
+# ./error_se8 < error_se8.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se8.output
+
+./alfa prueba/error_se9.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se9.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se9 prueba/error_se9.o alfalib.o
+
+# ./error_se9 < error_se9.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se9.output
+
+./alfa prueba/error_se10.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se10.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se10 prueba/error_se10.o alfalib.o
+
+# ./error_se10 < error_se10.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se10.output
+
+./alfa prueba/error_se11.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se11.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se11 prueba/error_se11.o alfalib.o
+
+# ./error_se11 < error_se11.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se11.output
+
+./alfa prueba/error_se12.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se12.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se12 prueba/error_se12.o alfalib.o
+
+# ./error_se12 < error_se12.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se12.output
+
+./alfa prueba/error_se13.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se13.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se13 prueba/error_se13.o alfalib.o
+
+# ./error_se13 < error_se13.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se13.output
+
+./alfa prueba/error_se14.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se14.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se14 prueba/error_se14.o alfalib.o
+
+# ./error_se14 < error_se14.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se14.output
+
+./alfa prueba/error_se15.alf prueba/misalida.asm
+# nasm -g -o prueba/error_se15.o -f elf32 prueba/misalida.asm
+# gcc -m32 -o prueba/error_se15 prueba/error_se15.o alfalib.o
+
+# ./error_se15 < error_se15.input > misalida.output
+# diff -bB prueba/misalida.output prueba/error_se15.output
+
+
+# FUNCIONES1
+./alfa prueba/funciones1.alf prueba/misalida.asm
+nasm -g -o prueba/funciones1.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/funciones1 prueba/funciones1.o alfalib.o
+
+./prueba/funciones1 < funciones1.input > misalida.output
 diff -bB prueba/misalida.output prueba/funciones1.output
 
-./alfa prueba/funciones2.alf prueba/misalida.output
-diff -bB prueba/misalida.output prueba/funciones2_1.output
+# FUNCIONES2
+./alfa prueba/funciones2.alf prueba/misalida.asm
+nasm -g -o prueba/funciones2.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/funciones2 prueba/funciones2.o alfalib.o
 
-./alfa prueba/funciones3.alf prueba/misalida.output
+./prueba/funciones2 < funciones2_1.input > misalida.output
+diff -bB prueba/misalida.output prueba/funciones2_1.output
+./prueba/funciones2 < funciones2_2.input > misalida.output
+diff -bB prueba/misalida.output prueba/funciones2_2.output
+./prueba/funciones2 < funciones2_3.input > misalida.output
+diff -bB prueba/misalida.output prueba/funciones2_3.output
+
+# FUNCIONES3
+./alfa prueba/funciones3.alf prueba/misalida.asm
+nasm -g -o prueba/funciones3.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/funciones3 prueba/funciones3.o alfalib.o
+
+./prueba/funciones3 < funciones3.input > misalida.output
 diff -bB prueba/misalida.output prueba/funciones3.output
 
-./alfa prueba/funciones4.alf prueba/misalida.output
+# FUNCIONES4
+./alfa prueba/funciones4.alf prueba/misalida.asm
+nasm -g -o prueba/funciones4.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/funciones4 prueba/funciones4.o alfalib.o
+
+./prueba/funciones4 < funciones4.input > misalida.output
 diff -bB prueba/misalida.output prueba/funciones4.output
 
-./alfa prueba/if1.alf prueba/misalida.output
+
+# IF1
+./alfa prueba/if1.alf prueba/misalida.asm
+nasm -g -o prueba/if1.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/if1 prueba/if1.o alfalib.o
+
+./prueba/if1 < if1.input > misalida.output
 diff -bB prueba/misalida.output prueba/if1.output
 
-./alfa prueba/if2.alf prueba/misalida.output
+# IF2
+./alfa prueba/if2.alf prueba/misalida.asm
+nasm -g -o prueba/if2.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/if2 prueba/if2.o alfalib.o
+
+./prueba/if2 < if2.input > misalida.output
 diff -bB prueba/misalida.output prueba/if2.output
 
-./alfa prueba/if3.alf prueba/misalida.output
+# IF3
+./alfa prueba/if3.alf prueba/misalida.asm
+nasm -g -o prueba/if3.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/if3 prueba/if3.o alfalib.o
+
+./prueba/if3 < if3_1.input > misalida.output
 diff -bB prueba/misalida.output prueba/if3_1.output
+./prueba/if3 < if3_2.input > misalida.output
+diff -bB prueba/misalida.output prueba/if3_2.output
+./prueba/if3 < if3_3.input > misalida.output
+diff -bB prueba/misalida.output prueba/if3_3.output
+./prueba/if3 < if3_4.input > misalida.output
+diff -bB prueba/misalida.output prueba/if3_4.output
+./prueba/if3 < if3_5.input > misalida.output
+diff -bB prueba/misalida.output prueba/if3_5.output
 
-./alfa prueba/logicas1.alf prueba/misalida.output
+
+# LOGICAS1
+./alfa prueba/logicas1.alf prueba/misalida.asm
+nasm -g -o prueba/logicas1.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/logicas1 prueba/logicas1.o alfalib.o
+
+./prueba/logicas1 < logicas1_1.input > misalida.output
 diff -bB prueba/misalida.output prueba/logicas1_1.output
+./prueba/logicas1 < logicas1_2.input > misalida.output
+diff -bB prueba/misalida.output prueba/logicas1_2.output
+./prueba/logicas1 < logicas1_3.input > misalida.output
+diff -bB prueba/misalida.output prueba/logicas1_3.output
+./prueba/logicas1 < logicas1_4.input > misalida.output
+diff -bB prueba/misalida.output prueba/logicas1_4.output
 
-./alfa prueba/logicas2.alf prueba/misalida.output
+# LOGICAS2
+./alfa prueba/logicas2.alf prueba/misalida.asm
+nasm -g -o prueba/logicas2.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/logicas2 prueba/logicas2.o alfalib.o
+
+./prueba/logicas2 < logicas2_1.input > misalida.output
 diff -bB prueba/misalida.output prueba/logicas2_1.output
+./prueba/logicas2 < logicas2_2.input > misalida.output
+diff -bB prueba/misalida.output prueba/logicas2_2.output
+./prueba/logicas2 < logicas2_3.input > misalida.output
+diff -bB prueba/misalida.output prueba/logicas2_3.output
 
-./alfa prueba/vectores1.alf prueba/misalida.output
+
+# VECTORES1
+./alfa prueba/vectores1.alf prueba/misalida.asm
+nasm -g -o prueba/vectores1.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/vectores1 prueba/vectores1.o alfalib.o
+
+./prueba/vectores1 < vectores1.input > misalida.output
 diff -bB prueba/misalida.output prueba/vectores1.output
 
-./alfa prueba/vectores2.alf prueba/misalida.output
+# VECTORES2
+./alfa prueba/vectores2.alf prueba/misalida.asm
+nasm -g -o prueba/vectores2.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/vectores2 prueba/vectores2.o alfalib.o
+
+./prueba/vectores2 < vectores2.input > misalida.output
 diff -bB prueba/misalida.output prueba/vectores2.output
 
-./alfa prueba/vectores3.alf prueba/misalida.output
+# VECTORES3
+./alfa prueba/vectores3.alf prueba/misalida.asm
+nasm -g -o prueba/vectores3.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/vectores3 prueba/vectores3.o alfalib.o
+
+./prueba/vectores3 < vectores3.input > misalida.output
 diff -bB prueba/misalida.output prueba/vectores3.output
 
-./alfa prueba/vectores4.alf prueba/misalida.output
+# VECTORES4
+./alfa prueba/vectores4.alf prueba/misalida.asm
+nasm -g -o prueba/vectores4.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/vectores4 prueba/vectores4.o alfalib.o
+
+./prueba/vectores4 < vectores4.input > misalida.output
 diff -bB prueba/misalida.output prueba/vectores4.output
 
-./alfa prueba/while.alf prueba/misalida.output
+
+# WHILE
+./alfa prueba/while.alf prueba/misalida.asm
+nasm -g -o prueba/while.o -f elf32 prueba/misalida.asm
+gcc -m32 -o prueba/while prueba/while.o alfalib.o
+
+./prueba/while < while_1.input > misalida.output
 diff -bB prueba/misalida.output prueba/while_1.output
+./prueba/while < while_2.input > misalida.output
+diff -bB prueba/misalida.output prueba/while_2.output
+./prueba/while < while_3.input > misalida.output
+diff -bB prueba/misalida.output prueba/while_3.output
