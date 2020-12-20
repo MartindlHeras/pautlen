@@ -748,7 +748,10 @@ exp:
 		    return -1;
         }
         if(num_params_call != aux_symb->num_param){
+<<<<<<< HEAD
             printf("num_params_call: %d y aux_symb->num_param: %d\n", num_params_call, aux_symb->num_param);
+=======
+>>>>>>> 1a22d322234249c989712857772e1c09504bcad3
             printf("****Error semantico en lin %d: Numero incorrecto de parametros en llamada a funcion.\n", n_lines);
             return -1;
         }
@@ -913,19 +916,21 @@ constante:
 
 constante_logica:
     TOK_TRUE {
-        fprintf(yyout, ";R102:\t<constante_logica> ::= true\n");
 
         $$.type = BOOL;
         $$.is_address = 0;
         $$.value = 1;
+        fprintf(yyout, ";R102:\t<constante_logica> ::= true\n");
+
         //escribir_operando(yyout, "1", 0);
     } |
     TOK_FALSE {
-        fprintf(yyout, ";R103:\t<constante_logica> ::= false\n");
 
         $$.type = BOOL;
         $$.is_address = 0;
         $$.value = 0;
+        fprintf(yyout, ";R103:\t<constante_logica> ::= false\n");
+
         //escribir_operando(yyout, "0", 0);
     };
 
