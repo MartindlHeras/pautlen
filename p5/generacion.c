@@ -244,12 +244,12 @@ void ifthen_fin(FILE * fpasm, int etiqueta){
 }
 
 void ifthenelse_fin_then(FILE * fpasm, int etiqueta){
-  fprintf(fpasm, "jmp ifelse_end_%d\n", etiqueta);
+  fprintf(fpasm, "jmp ifthen_end_%d\n", etiqueta);
   fprintf(fpasm, "ifthenelse_end_%d:\n", etiqueta);
 }
 
 void ifthenelse_fin(FILE * fpasm, int etiqueta){
-  fprintf(fpasm, "ifelse_end_%d:\n", etiqueta);
+  fprintf(fpasm, "ifthen_end_%d:\n", etiqueta);
 }
 
 
