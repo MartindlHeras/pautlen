@@ -8,9 +8,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "generacion.h"
+#include "alfa.h"
 
 #define ERR -1
+
+symbol_table aux_symbol_table;
 
 extern int yyparse(void);
 extern FILE *yyin;
@@ -37,9 +39,11 @@ int main(int argc, char const *argv[])
         return ERR;
     }
 
+    aux_symbol_table.global_hash = hash_table_create(65536);
+    aux_symbol_table.local_flag = 0;
     yyparse();
 
     fclose(yyin);
     fclose(yyout);
     return 0;
-} 
+}

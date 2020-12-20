@@ -50,7 +50,7 @@ input_t* hash_table_pair(char* key, symbol* value){
 
 int hash_table_hash(hash_table_t* hash_table, char* key){
     int i = 0;
-    unsigned long int hash_value;
+    unsigned long int hash_value;    
     
     while (i < strlen(key) && hash_value < ULONG_MAX){
         hash_value = hash_value << 8;

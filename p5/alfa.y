@@ -14,7 +14,7 @@ extern int is_morpho;
 extern int n_lines;
 extern int n_cols;
 
-symbol_table aux_symbol_table;
+extern symbol_table aux_symbol_table;
 symbol *aux_symb;
 
 int curr_type;
@@ -381,7 +381,7 @@ asignacion:
         
         aux_symb = search_table(&aux_symbol_table, $1.lexeme);
         if(!aux_symb){
-            printf("****Error semantico en linea %d: Acceso a variable no delcarada %s\n", n_lines, $1.lexeme);
+            printf("****Error semantico en linea %d: Acceso a variable no delcarada (%s)\n", n_lines, $1.lexeme);
             return -1;
         }
 
@@ -675,7 +675,7 @@ exp:
         aux_symb = search_table(&aux_symbol_table, $1.lexeme);
 
         if(!aux_symb){
-            printf("****Error semantico en linea %d: Acceso a variable no delcarada %s\n", n_lines, $1.lexeme);
+            printf("****Error semantico en linea %d: Acceso a variable no delcarada (%s)\n", n_lines, $1.lexeme);
             return -1;
         }
 
