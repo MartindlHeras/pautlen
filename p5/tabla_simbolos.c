@@ -71,5 +71,4 @@ symbol *search_table(symbol_table *hashes, char *key){
 
   res_value = hash_table_get(hashes->global_hash, key);
   return res_value;
-  
 }

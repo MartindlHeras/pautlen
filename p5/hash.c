@@ -66,8 +66,6 @@ int hash_table_set(hash_table_t* hash_table, char* key, symbol* value){
     int bin  = hash_table_hash(hash_table, key);
 
     next = hash_table->table[bin];
-
-    if (next) printf("key: %s\n next->key: %s\n", key, next->key);
     
     while (next && next->key && strcmp(key, next->key) > 0){
         last = next;

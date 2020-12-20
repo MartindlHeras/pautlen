@@ -10,7 +10,8 @@ all: alfa
 alfa: alfa.c alfa.h lex.yy.o y.tab.o generacion.o tabla_simbolos.o hash.o
 	gcc -Wall -g $^ -o $@
 
-run: ./script.sh
+run:
+	./script.sh
 
 generacion.o: generacion.c generacion.h
 	gcc -Wall -g -c $<

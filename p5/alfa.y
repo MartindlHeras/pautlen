@@ -247,7 +247,7 @@ nombre_funcion: TOK_FUNCTION tipo TOK_IDENTIFICADOR {
 
         aux_symb = search_table(&aux_symbol_table, $3.lexeme);
 
-        if(!aux_symb){
+        if(aux_symb){
             printf("****Error semantico en lin %d: Declaracion duplicada.\n", n_lines);
 			return -1;
         }
@@ -754,7 +754,7 @@ exp:
             printf("****Error semantico en lin %d. Asignacion incompatible.\n", n_lines);
 		    return -1;
         }
-        if(num_params_call != aux_symb->num_param){
+        if(num_params_call != aux_symb->num_param){);
             printf("****Error semantico en lin %d: Numero incorrecto de parametros en llamada a funcion.\n", n_lines);
             return -1;
         }
